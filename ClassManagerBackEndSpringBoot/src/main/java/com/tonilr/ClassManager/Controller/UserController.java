@@ -1,5 +1,6 @@
-package com.tonilr.ClassManager.DTO;
+package com.tonilr.ClassManager.Controller;
 
+import com.tonilr.ClassManager.DTO.UserDTO;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
