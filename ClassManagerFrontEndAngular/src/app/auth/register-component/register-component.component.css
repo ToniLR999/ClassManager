@@ -1,0 +1,13 @@
+.auth-container {
+    background: white;
+    padding: 2rem;
+    max-width: 400px;
+    margin: 4rem auto;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .full-width {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
