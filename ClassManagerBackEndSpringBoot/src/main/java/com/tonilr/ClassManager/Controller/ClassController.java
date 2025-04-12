@@ -44,4 +44,23 @@ public class ClassController {
         }
         return principal.toString();
     }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ClassResponse> getClassById(@PathVariable Long id) {
+        String username = getUsernameFromContext();
+        return ResponseEntity.ok(classService.getClassById(id, username));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClassResponse> updateClass(@PathVariable Long id, @RequestBody ClassRequest request) {
+        String username = getUsernameFromContext();
+        return ResponseEntity.ok(classService.updateClass(id, request, username));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteClass(@PathVariable Long id) {
+        String username = getUsernameFromContext();
+        classService.deleteClass(id, username);
+        return ResponseEntity.noContent().build();
+    }
 }

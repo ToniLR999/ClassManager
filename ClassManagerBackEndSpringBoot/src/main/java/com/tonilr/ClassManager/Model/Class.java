@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -26,6 +28,18 @@ public class Class {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")
     private User professor;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "class_students",
+        joinColumns = @JoinColumn(name = "class_id"),
+        inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private Set<Student> students = new HashSet<>();
+
+
+	public Class() {
+	}
 
 	public Class(Long id, String name, String description, LocalDateTime schedule, User professor) {
 		this.id = id;
@@ -74,6 +88,16 @@ public class Class {
 	public void setProfessor(User professor) {
 		this.professor = professor;
 	}
+
+	public Set<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
+	}
+	
+	
     
     
 }

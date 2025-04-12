@@ -55,4 +55,35 @@ public class ClassService {
                 .map(c -> new ClassResponse(c.getId(), c.getName(), c.getDescription(), c.getSchedule(), professor.getUsername()))
                 .collect(Collectors.toList());
     }
+    
+    public ClassResponse getClassById(Long id, String username) {
+        Class c = classRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Class not found"));
+        if (!c.getProfessor().getUsername().equals(username)) {
+            throw new RuntimeException("Unauthorized access");
+        }
+        return new ClassResponse(c.getId(), c.getName(), c.getDescription(), c.getSchedule(), c.getProfessor().getUsername());
+    }
+
+    public ClassResponse updateClass(Long id, ClassRequest request, String username) {
+        Class c = classRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Class not found"));
+        if (!c.getProfessor().getUsername().equals(username)) {
+            throw new RuntimeException("Unauthorized access");
+        }
+        c.setName(request.getName());
+        c.setDescription(request.getDescription());
+        c.setSchedule(request.getSchedule());
+        Class updated = classRepository.save(c);
+        return new ClassResponse(updated.getId(), updated.getName(), updated.getDescription(), updated.getSchedule(), updated.getProfessor().getUsername());
+    }
+
+    public void deleteClass(Long id, String username) {
+        Class c = classRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Class not found"));
+        if (!c.getProfessor().getUsername().equals(username)) {
+            throw new RuntimeException("Unauthorized access");
+        }
+        classRepository.delete(c);
+    }
 }
