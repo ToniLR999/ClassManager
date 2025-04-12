@@ -35,13 +35,13 @@ public class ClassController {
         return ResponseEntity.ok(classService.createClass(request, username));
     }
 
-    @GetMapping
+    @GetMapping("/getClasses")
     public ResponseEntity<List<ClassResponse>> getMyClasses() {
         String username = getUsernameFromContext();
         return ResponseEntity.ok(classService.getClassesByProfessor(username));
     }
     
-    @GetMapping
+    @GetMapping("/getClasses/paginated")
     public ResponseEntity<Page<Class>> getClasses(@RequestParam(defaultValue = "0") int page,
                                                          @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);

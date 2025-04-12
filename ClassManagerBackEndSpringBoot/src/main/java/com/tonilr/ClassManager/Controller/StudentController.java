@@ -36,7 +36,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.create(request));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<StudentResponse>> getAll() {
         return ResponseEntity.ok(studentService.getAll());
     }
