@@ -50,3 +50,9 @@
       }
     }
   }
+
+  .sidebar nav a.active {
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #2980b9; /* Resaltado de la ruta activa */
+  }

@@ -16,10 +16,10 @@
         <mat-label>Contraseña</mat-label>
         <input matInput formControlName="password" type="password" />
       </mat-form-field>
-  
-      <mat-form-field appearance="fill" class="full-width">
+      
+      <mat-form-field>
         <mat-label>Confirmar Contraseña</mat-label>
-        <input matInput formControlName="confirmPassword" type="password" />
+        <input matInput type="password" formControlName="confirmPassword">
       </mat-form-field>
   
       <button mat-raised-button color="primary" class="full-width" [disabled]="loading">

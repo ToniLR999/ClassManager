@@ -1,38 +1,47 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoginComponent } from './auth/login-component/login-component.component';
-import { RegisterComponent } from './auth/register-component/register-component.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthInterceptor } from './auth/auth-interceptor';
-import { DashboardComponent } from './dashboard/dash-board-component/dash-board-component.component';
-import { AuthModule } from './auth/auth-module';
-import { ClassesComponent } from './dashboard/classes/classes.component';
-import { StudentsComponent } from './dashboard/students/students.component';
-import { GradesComponent } from './dashboard/grades/grades.component';
+import { MatOptionModule } from '@angular/material/core'; // Opcional, a veces se importa directamente en MatSelectModule
+import { MatIconModule } from '@angular/material/icon';
+import { DashboardComponent } from './dashboard/dashboard-component/dashboard-component.component';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/auth.service';
+import { RouterModule } from '@angular/router';
+import { MatInputModule } from '@angular/material/input';           // <-- If you're using matInput as well
+import { MatButtonModule } from '@angular/material/button'; 
 
+const routes = [
+  { path: '', component: AppComponent },
+  { path: 'dashboard', component: DashboardComponent },
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    ClassesComponent,
-    StudentsComponent,
-    GradesComponent
   ],
   imports: [
+    MatSelectModule,
+    MatOptionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    AuthModule
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  ],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

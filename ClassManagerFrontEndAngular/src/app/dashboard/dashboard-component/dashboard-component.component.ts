@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dash-board-component.component.html',
-  styleUrls: ['./dash-board-component.component.css']
+  templateUrl: './dashboard-component.component.html',
+  styleUrls: ['./dashboard-component.component.css']
 })
 export class DashboardComponent {
   constructor(public authService: AuthService, private router: Router) {}
