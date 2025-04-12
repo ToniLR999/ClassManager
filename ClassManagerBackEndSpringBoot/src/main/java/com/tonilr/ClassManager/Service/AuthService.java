@@ -5,6 +5,8 @@ import com.tonilr.ClassManager.Model.Role;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Repository.UserRepository;
 import com.tonilr.ClassManager.Security.JwtService;
+import com.tonilr.ClassManager.Util.SanitizationUtils;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +47,8 @@ public class AuthService {
 
 	public String register(RegisterRequest request) {
         var user = new User();
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
+        user.setUsername(SanitizationUtils.sanitize(request.getUsername()));
+        user.setEmail(SanitizationUtils.sanitize(request.getEmail()));
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.PROFESSOR);
 
