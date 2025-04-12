@@ -12,6 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +36,10 @@ public class ClassService {
 		this.userRepository = userRepository;
 	}
 
+    public Page<Class> getAllClasses(Pageable pageable) {
+        return classRepository.findAll(pageable);
+    }
+    
 	public ClassResponse createClass(ClassRequest request, String username) {
         User professor = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Professor not found"));

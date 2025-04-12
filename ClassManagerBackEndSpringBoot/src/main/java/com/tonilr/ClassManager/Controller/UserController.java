@@ -13,17 +13,38 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
+import com.tonilr.ClassManager.Service.UserService;
+
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
+    private final UserService userService;
+
+	
 	@Autowired
     private final UserRepository userRepository;
 	
-	public UserController(UserRepository userRepository) {
+	
+    public UserController(UserService userService, UserRepository userRepository) {
+		super();
+		this.userService = userService;
 		this.userRepository = userRepository;
 	}
+
+
+	@GetMapping
+    public ResponseEntity<Page<User>> getUsers(@RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(userService.getAllUsers(pageable));
+    }
 
 
     @GetMapping("/me")

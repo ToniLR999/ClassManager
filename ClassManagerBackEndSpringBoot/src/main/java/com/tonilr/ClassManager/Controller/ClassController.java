@@ -11,6 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import com.tonilr.ClassManager.Model.Class;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @RestController
@@ -35,6 +39,13 @@ public class ClassController {
     public ResponseEntity<List<ClassResponse>> getMyClasses() {
         String username = getUsernameFromContext();
         return ResponseEntity.ok(classService.getClassesByProfessor(username));
+    }
+    
+    @GetMapping
+    public ResponseEntity<Page<Class>> getClasses(@RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(classService.getAllClasses(pageable));
     }
 
     private String getUsernameFromContext() {

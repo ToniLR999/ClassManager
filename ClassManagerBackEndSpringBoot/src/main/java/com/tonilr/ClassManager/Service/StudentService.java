@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,17 +28,11 @@ public class StudentService {
 	@Autowired
 	private final ClassRepository classRepository;
     
-	@Autowired
-	private final UserRepository userRepository;
-	
-	
-
-    public StudentService(StudentRepository studentRepository, ClassRepository classRepository,
+	public StudentService(StudentRepository studentRepository, ClassRepository classRepository,
 			UserRepository userRepository) {
 		super();
 		this.studentRepository = studentRepository;
 		this.classRepository = classRepository;
-		this.userRepository = userRepository;
 	}
 
 	public StudentResponse create(StudentRequest request) {
@@ -52,6 +48,10 @@ public class StudentService {
         return studentRepository.findAll()
                 .stream().map(this::toResponse)
                 .collect(Collectors.toList());
+    }
+    
+    public Page<Student> getAllStudents(Pageable pageable) {
+        return studentRepository.findAll(pageable);
     }
 
     public StudentResponse getById(Long id) {
