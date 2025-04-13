@@ -1,3 +1,48 @@
+<h2>Crear nueva clase</h2>
+
+<form class="new-class-form" (ngSubmit)="createClass()">
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre de la clase</mat-label>
+    <input matInput [(ngModel)]="newClass.name" name="name" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput [(ngModel)]="newClass.description" name="description" required></textarea>
+  </mat-form-field>
+
+  <!-- Puedes ocultar este campo si el backend asigna el profesor automáticamente -->
+  <!--
+  <mat-form-field appearance="outline">
+    <mat-label>ID del profesor</mat-label>
+    <input matInput type="number" [(ngModel)]="newClass.teacherId" name="teacherId" />
+  </mat-form-field>
+  -->
+
+  <button mat-raised-button color="primary" type="submit">Crear clase</button>
+</form>
+
+<hr />
+
+<div *ngIf="editMode" class="edit-class-form">
+  <h2>Editar clase</h2>
+
+  <form (ngSubmit)="updateClass()">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="editClass.name" name="editName" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput [(ngModel)]="editClass.description" name="editDescription" required></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Guardar</button>
+    <button mat-button type="button" (click)="cancelEdit()">Cancelar</button>
+  </form>
+</div>
+
 <h2>Todas las clases</h2>
 
 <mat-form-field appearance="outline" class="search-box">
@@ -16,6 +61,12 @@
     <mat-card-content>
       <p><strong>Descripción:</strong> {{ clase.description }}</p>
       <p><strong>Profesor:</strong> {{ clase.teacherName }}</p>
+
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="startEdit(clase)">Editar</button>
+        <button mat-button color="warn" (click)="deleteClass(clase.id)">Eliminar</button>
+      </mat-card-actions>
+      
     </mat-card-content>
   </mat-card>
 </div>
