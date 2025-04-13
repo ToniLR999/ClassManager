@@ -104,7 +104,6 @@
       }
     }
   },
-  "defaultProject": "ClassManager",
   "cli": {
     "analytics": false
   }
