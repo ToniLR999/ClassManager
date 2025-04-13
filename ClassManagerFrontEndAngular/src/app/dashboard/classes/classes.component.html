@@ -60,13 +60,11 @@
     <mat-card-title>{{ clase.name }}</mat-card-title>
     <mat-card-content>
       <p><strong>Descripción:</strong> {{ clase.description }}</p>
-      <p><strong>Profesor:</strong> {{ clase.teacherName }}</p>
-
-      <mat-card-actions>
-        <button mat-button color="primary" (click)="startEdit(clase)">Editar</button>
-        <button mat-button color="warn" (click)="deleteClass(clase.id)">Eliminar</button>
-      </mat-card-actions>
-      
+      <p><strong>Profesor:</strong> {{ clase.teacherName }}</p>   
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="primary" (click)="startEdit(clase)">Editar</button>
+      <button mat-button color="warn" (click)="deleteClass(clase.id)">Eliminar</button>
+    </mat-card-actions>
   </mat-card>
 </div>
