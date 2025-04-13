@@ -1,3 +1,44 @@
-<h2>Alumnos</h2>
-<p>Aquí puedes gestionar los alumnos.</p>
-<!-- Añadir una tabla/lista de alumnos, con las opciones necesarias. -->
+<h2>Registrar nuevo alumno</h2>
+<form (ngSubmit)="createStudent()" class="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="newStudent.name" name="name" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="newStudent.email" name="email" required />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Crear</button>
+</form>
+
+<hr />
+
+<h2>Lista de alumnos</h2>
+<mat-card *ngFor="let student of students" class="student-card">
+  <mat-card-title>{{ student.name }}</mat-card-title>
+  <mat-card-content>{{ student.email }}</mat-card-content>
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="startEdit(student)">Editar</button>
+    <button mat-button color="warn" (click)="deleteStudent(student.id)">Eliminar</button>
+  </mat-card-actions>
+</mat-card>
+
+<div *ngIf="editMode" class="edit-form">
+  <h3>Editar alumno</h3>
+  <form (ngSubmit)="updateStudent()" class="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="editStudent.name" name="editName" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="editStudent.email" name="editEmail" required />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Guardar</button>
+    <button mat-button type="button" (click)="cancelEdit()">Cancelar</button>
+  </form>
+</div>
