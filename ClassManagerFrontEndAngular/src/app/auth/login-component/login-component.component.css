@@ -11,3 +11,13 @@
     width: 100%;
     margin-bottom: 1rem;
   }
+
+  .register-link {
+    color: #1976d2;
+    font-weight: 500;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }

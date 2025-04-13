@@ -1,55 +1,36 @@
 import { Component } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register-component.component.html',
-  styleUrls: ['./register-component.component.css']
+  templateUrl: './register.component.html'
 })
 export class RegisterComponent {
-  loading = false;
-
-  registerForm = this.fb.group({
-    name: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
-    confirmPassword: ['', Validators.required]
-  });
+  registerForm: FormGroup;
 
   constructor(
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private snackbar: MatSnackBar
-  ) {}
+    private router: Router
+  ) {
+    this.registerForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      role: ['PROFESOR', Validators.required] // valor por defecto
+    });
+  }
 
-  onSubmit(): void {
+  onRegister() {
     if (this.registerForm.invalid) return;
 
-    const { password, confirmPassword } = this.registerForm.value;
-    if (password !== confirmPassword) {
-      this.snackbar.open('Las contraseñas no coinciden', 'Cerrar', { duration: 3000 });
-      return;
-    }
-
-    this.loading = true;
-    const data = {
-      name: this.registerForm.value.name,
-      email: this.registerForm.value.email,
-      password
-    };
-
-    this.authService.register(data).subscribe({
-      next: () => {
-        this.snackbar.open('Cuenta creada con éxito', 'Cerrar', { duration: 3000 });
-        this.router.navigate(['/login']);
-      },
-      error: () => {
-        this.snackbar.open('Error al registrar usuario', 'Cerrar', { duration: 3000 });
-        this.loading = false;
+    this.authService.register(this.registerForm.value).subscribe({
+      next: () => this.router.navigate(['/login']),
+      error: (err) => {
+        console.error('Error al registrar:', err);
       }
     });
   }
