@@ -1,3 +1,21 @@
-<h2>Clases</h2>
-<p>Aquí puedes ver todas las clases disponibles.</p>
-<!-- Aquí puedes añadir un listado de clases o crear nuevas, dependiendo de la funcionalidad. -->
+<h2>Todas las clases</h2>
+
+<mat-form-field appearance="outline" class="search-box">
+  <mat-label>Buscar clase</mat-label>
+  <input
+    matInput
+    [(ngModel)]="searchTerm"
+    (input)="onSearchChange()"
+    placeholder="Nombre de clase"
+  />
+</mat-form-field>
+
+<div class="class-list">
+  <mat-card *ngFor="let clase of filteredClasses" class="class-card">
+    <mat-card-title>{{ clase.name }}</mat-card-title>
+    <mat-card-content>
+      <p><strong>Descripción:</strong> {{ clase.description }}</p>
+      <p><strong>Profesor:</strong> {{ clase.teacherName }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
