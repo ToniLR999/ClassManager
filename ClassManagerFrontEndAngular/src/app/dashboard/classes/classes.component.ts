@@ -4,7 +4,7 @@ import { ClassService } from 'src/app/dashboard/classes/class.service';
 @Component({
   selector: 'app-classes',
   templateUrl: './classes.component.html',
-  styleUrls: ['./classes.component.scss']
+  styleUrls: ['./classes.component.css']
 })
 export class ClassesComponent implements OnInit {
   classes: any[] = [];

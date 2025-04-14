@@ -4,7 +4,7 @@ import { StudentService } from 'src/app/dashboard/students/students.service';
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
-  styleUrls: ['./students.component.scss'],
+  styleUrls: ['./students.component.css'],
 })
 export class StudentsComponent implements OnInit {
   students: any[] = [];

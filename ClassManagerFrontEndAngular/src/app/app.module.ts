@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -18,6 +18,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 import { MatSnackBarModule } from '@angular/material/snack-bar'; 
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -34,12 +36,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AuthModule,
     HttpClientModule,
     ReactiveFormsModule,
-    
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

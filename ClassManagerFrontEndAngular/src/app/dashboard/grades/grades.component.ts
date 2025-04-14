@@ -5,7 +5,7 @@ import { StudentService } from 'src/app/dashboard/students/students.service';
 @Component({
   selector: 'app-grades',
   templateUrl: './grades.component.html',
-  styleUrls: ['./grades.component.scss'],
+  styleUrls: ['./grades.component.css'],
 })
 export class GradesComponent implements OnInit {
   grades: any[] = [];
