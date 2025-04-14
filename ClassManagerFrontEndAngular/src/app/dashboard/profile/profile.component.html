@@ -1,0 +1,23 @@
+<div class="profile-container">
+    <h2>Mi Perfil</h2>
+  
+    <form #profileForm="ngForm" (ngSubmit)="updateProfile()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="user.name" name="name" required>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput [value]="user.email" disabled>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Contraseña nueva</mat-label>
+        <input matInput type="password" [(ngModel)]="newPassword" name="password">
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit">Actualizar</button>
+    </form>
+  </div>
+  

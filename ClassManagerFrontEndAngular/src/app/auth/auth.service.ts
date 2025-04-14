@@ -50,4 +50,11 @@ export class AuthService {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+
+
+  // Esto se llama desde el perfil para refrescar los datos
+  refreshCurrentUser() {
+    this.currentUser();
+  }
+
 }

@@ -1,0 +1,30 @@
+<div class="attendance-history-container">
+    <h2>Historial de Asistencia</h2>
+  
+    <form class="filter-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Clase</mat-label>
+        <mat-select [(ngModel)]="selectedClassId" name="classId" (selectionChange)="fetchByClass()">
+          <mat-option *ngFor="let cls of classes" [value]="cls.id">{{ cls.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Alumno</mat-label>
+        <mat-select [(ngModel)]="selectedStudentId" name="studentId" (selectionChange)="fetchByStudent()">
+          <mat-option *ngFor="let std of students" [value]="std.id">{{ std.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  
+    <div *ngIf="attendance.length > 0" class="results">
+      <mat-list>
+        <mat-list-item *ngFor="let a of attendance">
+          📅 {{ a.date | date:'mediumDate' }} - Alumno: {{ a.studentName }}
+        </mat-list-item>
+      </mat-list>
+    </div>
+  
+    <p *ngIf="attendance.length === 0">No hay registros de asistencia.</p>
+  </div>
+  

@@ -21,6 +21,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { ClassAssignmentComponent } from './dashboard/class-assignment/class-assignment.component';
 import { AttendanceComponent } from './dashboard/attendance/attendance.component';
+import { ProfileComponent } from './dashboard/profile/profile.component';
+import { AttendanceHistoryComponent } from './dashboard/attendance-history/attendance-history.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { AttendanceComponent } from './dashboard/attendance/attendance.component
     GradesComponent,
     ClassesComponent,
     ClassAssignmentComponent,
-    AttendanceComponent
+    AttendanceComponent,
+    ProfileComponent,
+    AttendanceHistoryComponent
   ],
   imports: [
     BrowserModule,
