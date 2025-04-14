@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ClassManager:build:production"
+              "browserTarget": "ClassManager:build:production"
             },
             "development": {
-              "buildTarget": "ClassManager:build:development"
+              "browserTarget": "ClassManager:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "ClassManager:build"
+            "browserTarget": "ClassManager:build"
           }
         },
         "test": {
