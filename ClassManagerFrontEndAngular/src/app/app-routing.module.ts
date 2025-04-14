@@ -7,6 +7,8 @@ import { LoginComponent } from './auth/login-component/login-component.component
 import { RegisterComponent } from './auth/register-component/register-component.component';
 import { DashboardComponent } from './dashboard/dashboard-component/dashboard-component.component';
 import { AuthGuard } from './auth/auth.guard';
+import { ClassAssignmentComponent } from './dashboard/class-assignment/class-assignment.component';
+import { AttendanceComponent } from './dashboard/attendance/attendance.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,12 +17,15 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard], // Asegúrate de que esta ruta esté protegida
+    canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: '/classes', pathMatch: 'full' }, // Ruta por defecto
       { path: 'classes', component: ClassesComponent },
       { path: 'students', component: StudentsComponent },
-      { path: 'grades', component: GradesComponent }
+      { path: 'grades', component: GradesComponent },
+      { path: 'assignments', component: ClassAssignmentComponent },
+      { path: 'attendance', component: AttendanceComponent },
+
     ]
   },
 

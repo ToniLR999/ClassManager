@@ -65,6 +65,7 @@
     <mat-card-actions>
       <button mat-button color="primary" (click)="startEdit(clase)">Editar</button>
       <button mat-button color="warn" (click)="deleteClass(clase.id)">Eliminar</button>
+      <button mat-button [routerLink]="['/dashboard/assignments']">Asignar alumnos</button>
     </mat-card-actions>
   </mat-card>
 </div>

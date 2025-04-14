@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar'; 
 import { FormsModule } from '@angular/forms';
 import { ClassAssignmentComponent } from './dashboard/class-assignment/class-assignment.component';
+import { AttendanceComponent } from './dashboard/attendance/attendance.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { ClassAssignmentComponent } from './dashboard/class-assignment/class-ass
     StudentsComponent,
     GradesComponent,
     ClassesComponent,
-    ClassAssignmentComponent
+    ClassAssignmentComponent,
+    AttendanceComponent
   ],
   imports: [
     BrowserModule,

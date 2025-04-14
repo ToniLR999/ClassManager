@@ -1,0 +1,21 @@
+<div class="attendance-container">
+  <h2>Registrar Asistencia</h2>
+
+  <form (ngSubmit)="markAttendance()" class="attendance-form">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Clase</mat-label>
+      <mat-select [(ngModel)]="selectedClassId" name="classId" required>
+        <mat-option *ngFor="let cls of classes" [value]="cls.id">{{ cls.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Alumno</mat-label>
+      <mat-select [(ngModel)]="selectedStudentId" name="studentId" required>
+        <mat-option *ngFor="let std of students" [value]="std.id">{{ std.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Marcar asistencia</button>
+  </form>
+</div>

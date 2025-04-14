@@ -1,0 +1,16 @@
+.attendance-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .attendance-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .form-field {
+    width: 100%;
+  }
+  
