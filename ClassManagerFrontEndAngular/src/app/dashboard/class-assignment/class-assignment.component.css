@@ -1,0 +1,9 @@
+.assignment-section {
+    margin-top: 2rem;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    max-width: 400px;
+  }
+  

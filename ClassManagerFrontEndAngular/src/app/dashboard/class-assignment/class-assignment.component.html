@@ -1,0 +1,29 @@
+<h2>Asignar Alumnos a Clases</h2>
+
+<mat-form-field appearance="fill">
+  <mat-label>Selecciona una clase</mat-label>
+  <mat-select [(ngModel)]="selectedClassId" (selectionChange)="onClassSelect()">
+    <mat-option *ngFor="let c of classes" [value]="c.id">{{ c.name }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div *ngIf="selectedClassId" class="assignment-section">
+  <mat-form-field appearance="fill">
+    <mat-label>Selecciona alumnos</mat-label>
+    <mat-select multiple [(ngModel)]="selectedStudents">
+      <mat-option *ngFor="let s of students" [value]="s.id">{{ s.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="assignStudents()">Asignar</button>
+
+  <h3>Alumnos Asignados</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let student of assignedStudents">
+      {{ student.name }}
+      <button mat-icon-button color="warn" (click)="removeStudent(student.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</div>
