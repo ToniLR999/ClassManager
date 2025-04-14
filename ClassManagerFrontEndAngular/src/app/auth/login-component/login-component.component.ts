@@ -1,6 +1,8 @@
 // src/app/auth/login/login.component.ts
 import { Component } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
+
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
