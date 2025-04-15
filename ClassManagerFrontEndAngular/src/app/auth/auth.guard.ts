@@ -9,6 +9,8 @@ export class AuthGuard  {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): boolean {
+    console.log("AuthGuard dice: ",this.authService.isAuthenticated());
+
     if (this.authService.isAuthenticated()) {
       return true;
     }

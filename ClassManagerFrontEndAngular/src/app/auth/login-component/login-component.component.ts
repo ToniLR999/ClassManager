@@ -37,8 +37,8 @@ export class LoginComponent {
 
     this.authService.login(username!, password!).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']);
         this.snackbar.open('Inicio de sesión exitoso', 'Cerrar', { duration: 3000 });
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         console.error('Error de login:', err);

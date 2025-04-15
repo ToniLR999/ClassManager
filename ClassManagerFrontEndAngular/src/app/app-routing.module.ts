@@ -21,7 +21,7 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: '/classes', pathMatch: 'full' }, // Ruta por defecto
+      { path: '', redirectTo: 'classes', pathMatch: 'full' }, // Ruta por defecto
       { path: 'classes', component: ClassesComponent },
       { path: 'students', component: StudentsComponent },
       { path: 'grades', component: GradesComponent },

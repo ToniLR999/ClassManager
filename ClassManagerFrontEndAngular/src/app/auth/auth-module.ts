@@ -29,6 +29,8 @@ import { RegisterComponent } from './register-component/register-component.compo
 
 
   ],
+  providers: [AuthModule],
+
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
   
 })

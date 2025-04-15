@@ -50,6 +50,7 @@ import { AttendanceHistoryComponent } from './dashboard/attendance-history/atten
     MatButtonModule,
     MatSnackBarModule
   ],
+  providers: [AuthModule],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
