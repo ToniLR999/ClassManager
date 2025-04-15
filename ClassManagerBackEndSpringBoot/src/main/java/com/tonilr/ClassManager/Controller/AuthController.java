@@ -1,6 +1,7 @@
 package com.tonilr.ClassManager.Controller;
 
 
+import com.tonilr.ClassManager.DTO.AuthRequest;
 import com.tonilr.ClassManager.DTO.RegisterRequest;
 import com.tonilr.ClassManager.Service.AuthService;
 import jakarta.validation.Valid;
@@ -30,11 +31,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(
-            @RequestParam String username,
-            @RequestParam String password
-    ) {
-        String jwt = authService.authenticate(username, password);
+    public ResponseEntity<String> login(@RequestBody AuthRequest request) {
+        String jwt = authService.authenticate(request);
         return ResponseEntity.ok(jwt);
     }
 }

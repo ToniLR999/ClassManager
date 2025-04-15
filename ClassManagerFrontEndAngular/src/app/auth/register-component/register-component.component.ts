@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register-component.component.html'
+  templateUrl: './register-component.component.html',
+  styleUrls: ['./register-component.component.css']
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -16,8 +17,8 @@ export class RegisterComponent {
     private router: Router
   ) {
     this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      name: ['', Validators.required],
+      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       role: ['PROFESOR', Validators.required] // valor por defecto
@@ -25,6 +26,8 @@ export class RegisterComponent {
   }
 
   onRegister() {
+    console.log(this.registerForm.value);
+
     if (this.registerForm.invalid) return;
 
     this.authService.register(this.registerForm.value).subscribe({

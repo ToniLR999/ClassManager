@@ -1,10 +1,10 @@
 package com.tonilr.ClassManager.Service;
 
+import com.tonilr.ClassManager.DTO.AuthRequest;
 import com.tonilr.ClassManager.DTO.RegisterRequest;
 import com.tonilr.ClassManager.Model.Role;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Repository.UserRepository;
-import com.tonilr.ClassManager.Security.JwtService;
 import com.tonilr.ClassManager.Util.SanitizationUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -60,7 +60,10 @@ public class AuthService {
         return jwtService.generateToken(user);
     }
 
-    public String authenticate(String username, String password) {
+    public String authenticate(AuthRequest request) {
+    	String username = request.getUsername();
+    	String password = request.getPassword();
+    	
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );

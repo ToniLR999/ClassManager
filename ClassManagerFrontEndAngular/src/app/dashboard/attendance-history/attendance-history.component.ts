@@ -6,7 +6,7 @@ import { StudentService } from '../students/students.service';
 @Component({
   selector: 'app-attendance-history',
   templateUrl: './attendance-history.component.html',
-  styleUrls: ['./attendance-history.component.scss']
+  styleUrls: ['./attendance-history.component.css']
 })
 export class AttendanceHistoryComponent implements OnInit {
   attendance: any[] = [];

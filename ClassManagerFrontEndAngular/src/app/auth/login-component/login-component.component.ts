@@ -1,4 +1,3 @@
-// src/app/auth/login/login.component.ts
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { UntypedFormBuilder } from '@angular/forms';
@@ -16,7 +15,7 @@ export class LoginComponent {
   loading = false;
 
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    username: ['', Validators.required],
     password: ['', Validators.required]
   });
 
@@ -28,12 +27,15 @@ export class LoginComponent {
   ) {}
 
   onSubmit(): void {
+    console.log(this.loginForm.value);
+
     if (this.loginForm.invalid) return;
 
     this.loading = true;
-    const { email, password } = this.loginForm.value;
+    
+    const { username, password } = this.loginForm.value;
 
-    this.authService.login(email!, password!).subscribe({
+    this.authService.login(username!, password!).subscribe({
       next: () => {
         this.router.navigate(['/dashboard']);
         this.snackbar.open('Inicio de sesión exitoso', 'Cerrar', { duration: 3000 });

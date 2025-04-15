@@ -1,4 +1,4 @@
-package com.tonilr.ClassManager.Security;
+package com.tonilr.ClassManager.Service;
 
 import com.tonilr.ClassManager.Model.User;
 import io.jsonwebtoken.Claims;
