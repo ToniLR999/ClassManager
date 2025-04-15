@@ -16,10 +16,6 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string): Observable<LoginResponse> {
-    /*public  loginUser(user: User): Observable<User> {
-      return this.http.post<User>(`${this.apiServerUrl}/user/login`,user);
-    }*/
-  
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap(res => {
         localStorage.setItem('token', res.token);
@@ -58,7 +54,8 @@ export class AuthService {
 
   // Esto se llama desde el perfil para refrescar los datos
   refreshCurrentUser() {
-    this.currentUser();
-  }
+    const user = this.currentUser;
+    console.log('Usuario actual:', user);
+    }
 
 }

@@ -7,6 +7,9 @@ import com.tonilr.ClassManager.Service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +34,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest request) {
-        String jwt = authService.authenticate(request);
-        return ResponseEntity.ok(jwt);
+    public ResponseEntity<Map<String, String>> login(@RequestBody AuthRequest request) {
+        String token = authService.authenticate(request);
+        String role = authService.getUserRole(request.getUsername()); // o como estés accediendo al rol
+
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        response.put("role", role);
+
+        return ResponseEntity.ok(response);
     }
 }

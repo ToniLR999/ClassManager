@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
-      this.authService.currentUser();
+      const user = this.authService.currentUser;
     }
   }
 }

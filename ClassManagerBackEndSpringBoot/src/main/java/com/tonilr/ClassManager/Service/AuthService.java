@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -71,5 +72,11 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return jwtService.generateToken(user);
+    }
+    
+    public String getUserRole(String username) {
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+        return user.getRole().name(); // o como lo tengas definido
     }
 }
