@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 interface LoginResponse {
   token: string;
   role: string;
+  user: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -20,6 +21,8 @@ export class AuthService {
       tap(res => {
         localStorage.setItem('token', res.token);
         localStorage.setItem('role', res.role);
+        localStorage.setItem('user', JSON.stringify({ username: 'ToniLR' }));
+
       })
     );
   }
@@ -31,6 +34,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('user');
+
     this.router.navigate(['/login']);
   }
 
