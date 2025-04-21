@@ -26,6 +26,7 @@ public class AttendanceController {
 		this.attendanceService = attendanceService;
 	}
 
+    //Frontend envia la fecha donde se registra la attendance por si se quiere registrar de otro dia
 	@PostMapping("/mark")
     public ResponseEntity<Void> markAttendance(@RequestParam Long studentId, @RequestParam Long classId) {
         String username = getUsername();

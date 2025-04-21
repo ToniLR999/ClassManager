@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,14 @@ export class UserService {
     return this.http.get(`${this.api}/me`);
   }
 
-  // Actualizar el perfil del usuario actual
+  getUsersPaginated(page: number, size: number): Observable<any> {
+        const params = new HttpParams()
+        .set('page', page)
+        .set('size', size);
+    return this.http.get(this.api,{params});
+  }
+
+  // Actualizar el perfil del usuario actual NO IMPLEMENTADO EN EL BACKEND
   updateSelf(data: { name?: string; password?: string }): Observable<any> {
     return this.http.put(`${this.api}/me`, data);
   }

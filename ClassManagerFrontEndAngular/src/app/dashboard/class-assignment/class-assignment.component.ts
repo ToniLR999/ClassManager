@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
 import { ClassAssignmentService } from 'src/app/dashboard/class-assignment/class-assignment.service';
 
 @Component({
@@ -33,11 +34,18 @@ export class ClassAssignmentComponent implements OnInit {
       });
     }
   }
-
   assignStudents() {
-    if (this.selectedClassId && this.selectedStudents.length > 0) {
-      this.assignmentService.assignStudentsToClass(this.selectedClassId, this.selectedStudents)
-        .subscribe(() => this.onClassSelect());
+    const classId = this.selectedClassId;
+  
+    if (classId !== null && this.selectedStudents.length > 0) {
+      const requests = this.selectedStudents.map(studentId =>
+        this.assignmentService.assignStudentToClass(studentId, classId)
+      );
+  
+      forkJoin(requests).subscribe({
+        next: () => this.onClassSelect(),
+        error: err => console.error('Error asignando estudiantes:', err)
+      });
     }
   }
 

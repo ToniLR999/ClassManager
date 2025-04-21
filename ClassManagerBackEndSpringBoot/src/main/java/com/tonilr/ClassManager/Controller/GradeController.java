@@ -1,5 +1,9 @@
 package com.tonilr.ClassManager.Controller;
 
+import com.tonilr.ClassManager.DTO.ClassRequest;
+import com.tonilr.ClassManager.DTO.ClassResponse;
+import com.tonilr.ClassManager.DTO.StudentRequest;
+import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Model.Grade;
 import com.tonilr.ClassManager.Service.GradeService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +40,23 @@ public class GradeController {
         Grade grade = gradeService.registerGrade(studentId, classId, value, description, username);
         return ResponseEntity.ok(grade);
     }
+	
+    @PutMapping("/{id}")
+    public ResponseEntity<Grade> updateGrade(@PathVariable Long id, @RequestBody StudentRequest request) {
+        return ResponseEntity.ok(gradeService.update(id, request));
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGrade(@PathVariable Long id) {
+    	gradeService.deleteGrade(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Grade>> getAllGrades() {
+        return ResponseEntity.ok(gradeService.getAllGrades());
+    }
+	
     @GetMapping("/student/{studentId}")
     public ResponseEntity<List<Grade>> getGradesByStudent(@PathVariable Long studentId) {
         return ResponseEntity.ok(gradeService.getGradesByStudent(studentId));
@@ -54,4 +74,5 @@ public class GradeController {
         }
         return principal.toString();
     }
+    
 }

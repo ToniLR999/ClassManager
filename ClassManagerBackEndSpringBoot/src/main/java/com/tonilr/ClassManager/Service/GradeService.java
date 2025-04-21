@@ -1,6 +1,8 @@
 package com.tonilr.ClassManager.Service;
 
 
+import com.tonilr.ClassManager.DTO.StudentRequest;
+import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Model.Class;
 import com.tonilr.ClassManager.Model.Grade;
 import com.tonilr.ClassManager.Model.Student;
@@ -56,7 +58,23 @@ public class GradeService {
         grade.setDate(LocalDate.now());
         return gradeRepository.save(grade);
     }
+	
+    public Grade updateGrade(Long id, Double score, String subject) {
+        Grade grade = gradeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Grade not found"));
+        grade.setDescription(subject);
+        grade.setValue(score);
+        return gradeRepository.save(grade);
+    }
 
+    public void deleteGrade(Long id) {
+    	gradeRepository.deleteById(id);
+    }
+
+    public List<Grade> getAllGrades() {
+        return gradeRepository.findAll();
+    }
+	
     public List<Grade> getGradesByStudent(Long studentId) {
         return gradeRepository.findByStudentId(studentId);
     }

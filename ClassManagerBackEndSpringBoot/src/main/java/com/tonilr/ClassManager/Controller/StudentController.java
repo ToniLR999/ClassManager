@@ -70,6 +70,13 @@ public class StudentController {
         studentService.assignToClass(id, classId, username);
         return ResponseEntity.ok().build();
     }
+    
+    @DeleteMapping("/{id}/delete/{classId}")
+    public ResponseEntity<Void> removeStudentFromClass(@PathVariable Long id, @PathVariable Long classId) {
+        String username = getUsernameFromContext();
+        studentService.removeFromClass(id, classId, username);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/by-class/{classId}")
     public ResponseEntity<Set<StudentResponse>> getStudentsByClass(@PathVariable Long classId) {

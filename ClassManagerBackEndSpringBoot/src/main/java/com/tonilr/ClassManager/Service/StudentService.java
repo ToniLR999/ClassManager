@@ -90,6 +90,24 @@ public class StudentService {
         classRepository.save(clazz);
         studentRepository.save(student);
     }
+    
+    public void removeFromClass(Long studentId, Long classId, String username) {
+        Class clazz = classRepository.findById(classId)
+                .orElseThrow(() -> new RuntimeException("Class not found"));
+
+        if (!clazz.getProfessor().getUsername().equals(username)) {
+            throw new RuntimeException("Unauthorized to remove student from this class");
+        }
+
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        clazz.getStudents().remove(student);
+        student.getClasses().remove(clazz);
+
+        classRepository.save(clazz);
+        studentRepository.save(student);
+    }
 
     public Set<StudentResponse> getStudentsByClass(Long classId, String username) {
         Class clazz = classRepository.findById(classId)

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,7 +12,15 @@ export class StudentService {
   constructor(private http: HttpClient) {}
 
   getAllStudents(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(`${this.apiUrl}/all`);
+  }
+
+  getStudentsPaginated(page: number, size: number): Observable<any[]> {
+
+    const params = new HttpParams()
+    .set('page', page)
+    .set('size', size);
+    return this.http.get<any[]>(this.apiUrl, {params});
   }
 
   getStudentById(id: number): Observable<any> {
