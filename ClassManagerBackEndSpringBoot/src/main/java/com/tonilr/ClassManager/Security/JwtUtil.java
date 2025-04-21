@@ -5,12 +5,16 @@ import com.tonilr.ClassManager.Model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import java.util.Base64;
 
 import java.util.Date;
 import java.util.function.Function;
+
+import javax.crypto.SecretKey;
 
 @Component
 @RequiredArgsConstructor
@@ -33,15 +37,23 @@ public class JwtUtil {
 	    }
 
 	    private Claims extractAllClaims(String token) {
-	        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+	        return Jwts.parserBuilder()
+	        	    .setSigningKey(getSigningKey())
+	        	    .build()
+	        	    .parseClaimsJws(token)
+	        	    .getBody();
 	    }
+	    
+	    private SecretKey getSigningKey() {
+	        byte[] decodedKey = Base64.getDecoder().decode(secret);
+	        return Keys.hmacShaKeyFor(decodedKey);	    }
 
 	    public String generateToken(User user) {
 	        return Jwts.builder()
 	                .setSubject(user.getUsername())
 	                .setIssuedAt(new Date(System.currentTimeMillis()))
 	                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-	                .signWith(SignatureAlgorithm.HS256, secret)
+	                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
 	                .compact();
 	    }
 

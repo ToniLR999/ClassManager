@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,7 @@ import { ClassAssignmentComponent } from './dashboard/class-assignment/class-ass
 import { AttendanceComponent } from './dashboard/attendance/attendance.component';
 import { ProfileComponent } from './dashboard/profile/profile.component';
 import { AttendanceHistoryComponent } from './dashboard/attendance-history/attendance-history.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 
 @NgModule({
@@ -50,7 +51,11 @@ import { AttendanceHistoryComponent } from './dashboard/attendance-history/atten
     MatButtonModule,
     MatSnackBarModule
   ],
-  providers: [AuthModule],
+  providers: [AuthModule,   {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

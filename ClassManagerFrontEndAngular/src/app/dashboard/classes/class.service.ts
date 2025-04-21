@@ -13,7 +13,12 @@ export class ClassService {
 
   // Obtener todas las clases
   getAllClasses(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(`${this.apiUrl}/getClasses`);
+  }
+
+  //Falta enviar bien los RequestParams de page y size
+  getClassesPaginated(page: number, size: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/getClasses/paginated`);
   }
 
   // Obtener clase por ID

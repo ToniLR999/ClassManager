@@ -3,22 +3,30 @@ package com.tonilr.ClassManager.Service;
 import com.tonilr.ClassManager.Model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import org.springframework.beans.factory.annotation.Value;
+import javax.crypto.SecretKey;
+import java.util.Base64;
+
 
 @Service
 public class JwtService {
 
     private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 24 horas
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final SecretKey key;
 
+    public JwtService(@Value("${app.jwt.secret}") String secret) {
+        byte[] decodedKey = Base64.getDecoder().decode(secret);
+        this.key = Keys.hmacShaKeyFor(decodedKey);
+    }
+    
+    
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole().name());

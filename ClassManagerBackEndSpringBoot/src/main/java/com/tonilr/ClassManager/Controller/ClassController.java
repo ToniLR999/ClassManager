@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.tonilr.ClassManager.Model.Class;
+import com.tonilr.ClassManager.Model.User;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +40,7 @@ public class ClassController {
     @GetMapping("/getClasses")
     public ResponseEntity<List<ClassResponse>> getMyClasses() {
         String username = getUsernameFromContext();
+        System.out.println("Professor username: "+username);
         return ResponseEntity.ok(classService.getClassesByProfessor(username));
     }
     
@@ -50,8 +53,8 @@ public class ClassController {
 
     private String getUsernameFromContext() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails userDetails) {
-            return userDetails.getUsername();
+        if (principal instanceof User user) {
+            return user.getUsername();
         }
         return principal.toString();
     }
