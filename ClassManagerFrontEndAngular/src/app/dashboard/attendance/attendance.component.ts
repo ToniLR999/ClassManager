@@ -40,12 +40,19 @@ export class AttendanceComponent implements OnInit {
   }
 
   markAttendance() {
+    console.log("Marking attendance");
     const attendanceData = {
       classId: this.selectedClassId,
       studentId: this.selectedStudentId,
       date: new Date().toISOString()
     };
 
-    this.attendanceService.registerAttendance(attendanceData)
-  }
+    this.attendanceService.registerAttendance(attendanceData).subscribe({
+      next: () => {
+        console.log("✅ Attendance marked successfully");
+      },
+      error: (error) => {
+        console.error("❌ Error marking attendance:", error);
+      }
+    });  }
 }

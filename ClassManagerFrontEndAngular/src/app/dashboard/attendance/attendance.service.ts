@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 
@@ -10,8 +10,14 @@ export class AttendanceService {
 
   constructor(private http: HttpClient) {}
 
-  registerAttendance(data: { studentId: number, classId: number, date: string }) {
-    return this.http.post(`${this.apiUrl}`, data);
+  registerAttendance(data: { studentId: number, classId: number}) {
+    const params = new HttpParams()
+    .set('studentId', data.studentId.toString())
+    .set('classId', data.classId.toString());
+
+  console.log("Sending request with params:", params.toString());
+
+  return this.http.post(`${this.apiUrl}/mark`, null, { params }); 
   }
 
   getAttendanceByClass(classId: number) {

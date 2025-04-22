@@ -38,6 +38,7 @@ public class AttendanceService {
 	}
 
 	public void markAttendance(Long studentId, Long classId, String username) {
+		System.out.println("Marking Attendace");
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 

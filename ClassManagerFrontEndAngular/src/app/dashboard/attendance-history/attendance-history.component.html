@@ -12,7 +12,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Alumno</mat-label>
         <mat-select [(ngModel)]="selectedStudentId" name="studentId" (selectionChange)="fetchByStudent()">
-          <mat-option *ngFor="let std of students" [value]="std.id">{{ std.name }}</mat-option>
+          <mat-option *ngFor="let std of students" [value]="std.id">{{ std.firstName+" "+std.lastName }}</mat-option>
         </mat-select>
       </mat-form-field>
     </form>

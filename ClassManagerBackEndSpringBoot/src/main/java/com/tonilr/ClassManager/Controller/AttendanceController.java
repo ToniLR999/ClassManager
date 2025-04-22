@@ -1,6 +1,7 @@
 package com.tonilr.ClassManager.Controller;
 
 import com.tonilr.ClassManager.Model.Attendance;
+import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Service.AttendanceService;
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +30,8 @@ public class AttendanceController {
     //Frontend envia la fecha donde se registra la attendance por si se quiere registrar de otro dia
 	@PostMapping("/mark")
     public ResponseEntity<Void> markAttendance(@RequestParam Long studentId, @RequestParam Long classId) {
+		System.out.println("studentId = " + studentId + ", classId = " + classId);
+
         String username = getUsername();
         attendanceService.markAttendance(studentId, classId, username);
         return ResponseEntity.ok().build();
@@ -46,8 +49,8 @@ public class AttendanceController {
 
     private String getUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails userDetails) {
-            return userDetails.getUsername();
+        if (principal instanceof User user) {
+            return user.getUsername();
         }
         return principal.toString();
     }
