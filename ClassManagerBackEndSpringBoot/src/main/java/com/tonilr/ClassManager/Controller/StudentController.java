@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.tonilr.ClassManager.Model.Student;
+import com.tonilr.ClassManager.Model.User;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -64,10 +66,10 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/assign/{classId}")
-    public ResponseEntity<Void> assignStudentToClass(@PathVariable Long id, @PathVariable Long classId) {
+    @PostMapping("/{studentId}/assign/{classId}")
+    public ResponseEntity<Void> assignStudentToClass(@PathVariable Long studentId, @PathVariable Long classId) {
         String username = getUsernameFromContext();
-        studentService.assignToClass(id, classId, username);
+        studentService.assignToClass(studentId, classId, username);
         return ResponseEntity.ok().build();
     }
     
@@ -86,8 +88,8 @@ public class StudentController {
 
     private String getUsernameFromContext() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails userDetails) {
-            return userDetails.getUsername();
+        if (principal instanceof User user) {
+            return user.getUsername();
         }
         return principal.toString();
     }

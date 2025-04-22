@@ -39,7 +39,7 @@ export class ClassAssignmentComponent implements OnInit {
   
     if (classId !== null && this.selectedStudents.length > 0) {
       const requests = this.selectedStudents.map(studentId =>
-        this.assignmentService.assignStudentToClass(studentId, classId)
+        this.assignmentService.assignStudentToClass(classId, studentId)
       );
   
       forkJoin(requests).subscribe({

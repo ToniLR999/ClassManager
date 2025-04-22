@@ -24,7 +24,7 @@ export class GradeService {
   }
 
   createGrade(gradeData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/grades/register`, gradeData);
+    return this.http.post<any>(`${this.apiUrl}/register`, gradeData);
   }
 
   //Falta pasarle el body con los datos nuevos

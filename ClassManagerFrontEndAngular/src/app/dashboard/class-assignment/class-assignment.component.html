@@ -11,7 +11,7 @@
   <mat-form-field appearance="fill">
     <mat-label>Selecciona alumnos</mat-label>
     <mat-select multiple [(ngModel)]="selectedStudents">
-      <mat-option *ngFor="let s of students" [value]="s.id">{{ s.name }}</mat-option>
+      <mat-option *ngFor="let s of students" [value]="s.id">{{ s.firstName+" "+s.lastName }}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -20,7 +20,7 @@
   <h3>Alumnos Asignados</h3>
   <mat-list>
     <mat-list-item *ngFor="let student of assignedStudents">
-      {{ student.name }}
+      {{student.firstName+" "+student.lastName  }}
       <button mat-icon-button color="warn" (click)="removeStudent(student.id)">
         <mat-icon>delete</mat-icon>
       </button>
