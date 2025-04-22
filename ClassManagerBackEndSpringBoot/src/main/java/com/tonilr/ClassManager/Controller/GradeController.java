@@ -42,8 +42,8 @@ public class GradeController {
     }
 	
     @PutMapping("/{id}")
-    public ResponseEntity<Grade> updateGrade(@PathVariable Long id, @RequestBody StudentRequest request) {
-        return ResponseEntity.ok(gradeService.update(id, request));
+    public ResponseEntity<Grade> updateGrade(@PathVariable Long id, @RequestParam Double score,@RequestParam String subject) {
+        return ResponseEntity.ok(gradeService.updateGrade(id, score, subject));
     }
 
     @DeleteMapping("/{id}")
