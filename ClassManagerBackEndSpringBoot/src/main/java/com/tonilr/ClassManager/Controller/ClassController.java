@@ -34,6 +34,7 @@ public class ClassController {
 	@PostMapping
     public ResponseEntity<ClassResponse> createClass(@RequestBody ClassRequest request) {
         String username = getUsernameFromContext();
+        System.out.println("Username del profe: "+username);
         return ResponseEntity.ok(classService.createClass(request, username));
     }
 

@@ -10,14 +10,16 @@ export class StudentsComponent implements OnInit {
   students: any[] = [];
 
   newStudent = {
-    name: '',
+    firstName: '',
+    lastName: '',
     email: ''
   };
 
   editMode = false;
   editStudentId: number | null = null;
   editStudent = {
-    name: '',
+    firstName: '',
+    lastName: '',
     email: ''
   };
 
@@ -34,9 +36,9 @@ export class StudentsComponent implements OnInit {
   }
 
   createStudent() {
-    if (!this.newStudent.name || !this.newStudent.email) return;
+    if (!this.newStudent.firstName || !this.newStudent.lastName || !this.newStudent.email) return;
     this.studentService.createStudent(this.newStudent).subscribe(() => {
-      this.newStudent = { name: '', email: '' };
+      this.newStudent = { firstName: '',lastName: '', email: '' };
       this.loadStudents();
     });
   }
@@ -44,7 +46,7 @@ export class StudentsComponent implements OnInit {
   startEdit(student: any) {
     this.editMode = true;
     this.editStudentId = student.id;
-    this.editStudent = { name: student.name, email: student.email };
+    this.editStudent = { firstName: student.firstName, lastName: student.lastName, email: student.email };
   }
 
   updateStudent() {
@@ -58,7 +60,7 @@ export class StudentsComponent implements OnInit {
   cancelEdit() {
     this.editMode = false;
     this.editStudentId = null;
-    this.editStudent = { name: '', email: '' };
+    this.editStudent = { firstName: '', lastName: '', email: '' };
   }
 
   deleteStudent(id: number) {

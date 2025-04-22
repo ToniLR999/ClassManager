@@ -4,7 +4,7 @@
     <mat-label>Alumno</mat-label>
     <mat-select [(ngModel)]="newGrade.studentId" name="studentId" required>
       <mat-option *ngFor="let student of students" [value]="student.id">
-        {{ student.name }}
+        {{ student.firstName + " "+student.lastName }}
       </mat-option>
     </mat-select>
   </mat-form-field>

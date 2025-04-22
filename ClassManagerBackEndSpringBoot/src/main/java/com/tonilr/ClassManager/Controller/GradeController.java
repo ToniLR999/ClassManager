@@ -1,9 +1,5 @@
 package com.tonilr.ClassManager.Controller;
 
-import com.tonilr.ClassManager.DTO.ClassRequest;
-import com.tonilr.ClassManager.DTO.ClassResponse;
-import com.tonilr.ClassManager.DTO.StudentRequest;
-import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Model.Grade;
 import com.tonilr.ClassManager.Service.GradeService;
 import lombok.RequiredArgsConstructor;

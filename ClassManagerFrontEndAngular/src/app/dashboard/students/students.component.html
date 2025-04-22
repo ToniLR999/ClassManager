@@ -2,7 +2,12 @@
 <form (ngSubmit)="createStudent()" class="form">
   <mat-form-field appearance="outline">
     <mat-label>Nombre</mat-label>
-    <input matInput [(ngModel)]="newStudent.name" name="name" required />
+    <input matInput [(ngModel)]="newStudent.firstName" name="firstName" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Apellidos</mat-label>
+    <input matInput [(ngModel)]="newStudent.lastName" name="lastName" required />
   </mat-form-field>
 
   <mat-form-field appearance="outline">
@@ -17,7 +22,8 @@
 
 <h2>Lista de alumnos</h2>
 <mat-card *ngFor="let student of students" class="student-card">
-  <mat-card-title>{{ student.name }}</mat-card-title>
+  <mat-card-title>{{ student.firstName }}</mat-card-title>
+  <mat-card-title>{{ student.lastName }}</mat-card-title>
   <mat-card-content>{{ student.email }}</mat-card-content>
   <mat-card-actions>
     <button mat-button color="primary" (click)="startEdit(student)">Editar</button>
@@ -30,7 +36,12 @@
   <form (ngSubmit)="updateStudent()" class="form">
     <mat-form-field appearance="outline">
       <mat-label>Nombre</mat-label>
-      <input matInput [(ngModel)]="editStudent.name" name="editName" required />
+      <input matInput [(ngModel)]="editStudent.firstName" name="editFirstName" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Apellidos</mat-label>
+      <input matInput [(ngModel)]="editStudent.lastName" name="editLastName" required />
     </mat-form-field>
 
     <mat-form-field appearance="outline">

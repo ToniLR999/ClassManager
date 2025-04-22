@@ -24,6 +24,7 @@ import { AttendanceComponent } from './dashboard/attendance/attendance.component
 import { ProfileComponent } from './dashboard/profile/profile.component';
 import { AttendanceHistoryComponent } from './dashboard/attendance-history/attendance-history.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule
   ],
   providers: [AuthModule,   {
     provide: HTTP_INTERCEPTORS,
