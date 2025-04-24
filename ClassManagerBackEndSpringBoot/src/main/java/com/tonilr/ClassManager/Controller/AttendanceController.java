@@ -1,5 +1,6 @@
 package com.tonilr.ClassManager.Controller;
 
+import com.tonilr.ClassManager.DTO.AttendanceResponse;
 import com.tonilr.ClassManager.Model.Attendance;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Service.AttendanceService;
@@ -38,13 +39,35 @@ public class AttendanceController {
     }
 
     @GetMapping("/student/{studentId}")
-    public ResponseEntity<List<Attendance>> getAttendanceByStudent(@PathVariable Long studentId) {
-        return ResponseEntity.ok(attendanceService.getAttendanceByStudent(studentId));
-    }
+    public ResponseEntity<List<AttendanceResponse>> getAttendanceByStudent(@PathVariable Long studentId) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByStudent(studentId);
+        List<AttendanceResponse> response = attendanceList.stream()
+                .map(a -> new AttendanceResponse(
+                        a.getId(),
+                        a.getDate(),
+                        a.getStudent().getId(),
+                        a.getStudent().getFirstName(),
+                        a.getStudent().getLastName(),
+                        a.getClazz().getId(),
+                        a.getClazz().getName()))
+                    .toList();
+        return ResponseEntity.ok(response);    
+   }
 
     @GetMapping("/class/{classId}")
-    public ResponseEntity<List<Attendance>> getAttendanceByClass(@PathVariable Long classId) {
-        return ResponseEntity.ok(attendanceService.getAttendanceByClass(classId));
+    public ResponseEntity<List<AttendanceResponse>> getAttendanceByClass(@PathVariable Long classId) {
+        List<Attendance> attendanceList = attendanceService.getAttendanceByClass(classId);
+        List<AttendanceResponse> response = attendanceList.stream()
+            .map(a -> new AttendanceResponse(
+                a.getId(),
+                a.getDate(),
+                a.getStudent().getId(),
+                a.getStudent().getFirstName(),
+                a.getStudent().getLastName(),
+                a.getClazz().getId(),
+                a.getClazz().getName()))
+            .toList();
+        return ResponseEntity.ok(response);      
     }
 
     private String getUsername() {

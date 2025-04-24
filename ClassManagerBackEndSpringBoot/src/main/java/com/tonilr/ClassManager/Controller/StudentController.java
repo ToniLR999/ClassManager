@@ -1,5 +1,6 @@
 package com.tonilr.ClassManager.Controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tonilr.ClassManager.DTO.StudentRequest;
 import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Service.StudentService;
@@ -23,6 +24,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/students")
 @RequiredArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class StudentController {
 
 	@Autowired

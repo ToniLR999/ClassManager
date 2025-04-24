@@ -6,11 +6,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "attendance",
        uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "class_id", "date"}))
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Attendance {
 
     @Id
@@ -42,6 +45,7 @@ public class Attendance {
 
 	public Long getId() {
 		return id;
+		
 	}
 
 	public void setId(Long id) {

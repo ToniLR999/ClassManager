@@ -20,7 +20,7 @@
     <div *ngIf="attendance.length > 0" class="results">
       <mat-list>
         <mat-list-item *ngFor="let a of attendance">
-          📅 {{ a.date | date:'mediumDate' }} - Alumno: {{ a.studentName }}
+          📅 {{ a.date | date:'mediumDate' }} - Alumno: {{ a.studentFirstName+" "+a.studentLastName }}
         </mat-list-item>
       </mat-list>
     </div>
