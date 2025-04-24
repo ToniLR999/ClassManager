@@ -19,12 +19,18 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user = { ...this.authService.currentUser! };
-  }
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.user = { ...user };
+      } else {
+        // Si no hay usuario aún, lo refrescamos
+        this.authService.refreshCurrentUser();
+      }
+    });  }
 
   updateProfile() {
     const payload = {
-      name: this.user.name,
+      username: this.user.username,
       password: this.newPassword || undefined
     };
 

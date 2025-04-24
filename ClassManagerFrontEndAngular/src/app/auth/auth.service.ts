@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
@@ -13,7 +13,13 @@ interface LoginResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private currentUserSubject = new BehaviorSubject<any>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
+
   private apiUrl = `${environment.apiUrl}/auth`;
+
+  private userApiUrl = `${environment.apiUrl}/users`;
+
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -22,7 +28,7 @@ export class AuthService {
       tap(res => {
         localStorage.setItem('token', res.token);
         localStorage.setItem('role', res.role);
-        localStorage.setItem('user',  JSON.stringify({ username: 'ToniLR' }));
+        localStorage.setItem('user',  JSON.stringify({ username: res.user }));
       })
     );
   }
@@ -50,16 +56,22 @@ export class AuthService {
     return localStorage.getItem('role');
   }
 
-  get currentUser(): any {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
-  }
+  getCurrentUser() {
+    return this.http.get<any>(`${this.userApiUrl}/me`);
 
+    /*onst user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  */}
 
   // Esto se llama desde el perfil para refrescar los datos
   refreshCurrentUser() {
-    const user = this.currentUser;
+    this.getCurrentUser().subscribe(user => {
+      console.log('Usuario actualizado desde backend:', user);
+      this.currentUserSubject.next(user); // actualiza los componentes suscritos
+    });
+    
+    /*const user = this.currentUser;
     console.log('Usuario actual:', user);
-    }
+    */}
 
 }

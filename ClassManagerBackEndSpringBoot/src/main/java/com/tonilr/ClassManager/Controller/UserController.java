@@ -52,11 +52,12 @@ public class UserController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
 
-        if (principal instanceof UserDetails userDetails) {
-            username = userDetails.getUsername();
+        if (principal instanceof User user) {
+            username = user.getUsername();
         } else {
             username = principal.toString();
         }
+        System.out.println("Current username from security context: " + username);
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));

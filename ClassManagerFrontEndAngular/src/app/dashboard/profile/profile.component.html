@@ -3,8 +3,8 @@
   
     <form #profileForm="ngForm" (ngSubmit)="updateProfile()">
       <mat-form-field appearance="fill">
-        <mat-label>Nombre</mat-label>
-        <input matInput [(ngModel)]="user.name" name="name" required>
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="user.username" name="username" required>
       </mat-form-field>
   
       <mat-form-field appearance="fill">
