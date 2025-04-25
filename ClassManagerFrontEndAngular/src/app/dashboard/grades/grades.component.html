@@ -10,13 +10,27 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
+    <mat-label>Class</mat-label>
+    <mat-select [(ngModel)]="newGrade.classId" name="classId" required>
+      <mat-option *ngFor="let class of classes" [value]="class.id">
+        {{ class.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
     <mat-label>Materia</mat-label>
     <input matInput [(ngModel)]="newGrade.subject" name="subject" required />
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Nota</mat-label>
-    <input matInput type="number" [(ngModel)]="newGrade.score" name="score" required />
+    <input matInput type="number" [(ngModel)]="newGrade.value" name="score" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <input matInput type="text" [(ngModel)]="newGrade.description" name="description" required />
   </mat-form-field>
 
   <button mat-raised-button color="primary" type="submit">Guardar</button>
