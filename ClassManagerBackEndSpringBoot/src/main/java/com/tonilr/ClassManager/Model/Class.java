@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -27,6 +28,10 @@ public class Class {
     private String name;
     private String description;
     private LocalDateTime schedule;
+    
+    @ElementCollection
+    private List<String> subjects;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")
@@ -44,12 +49,16 @@ public class Class {
 	public Class() {
 	}
 
-	public Class(Long id, String name, String description, LocalDateTime schedule, User professor) {
+	public Class(Long id, String name, String description, LocalDateTime schedule, List<String> subjects,
+			User professor, Set<Student> students) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.schedule = schedule;
+		this.subjects = subjects;
 		this.professor = professor;
+		this.students = students;
 	}
 
 	public Long getId() {
@@ -98,6 +107,14 @@ public class Class {
 
 	public void setStudents(Set<Student> students) {
 		this.students = students;
+	}
+
+	public List<String> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<String> subjects) {
+		this.subjects = subjects;
 	}
 	
 	

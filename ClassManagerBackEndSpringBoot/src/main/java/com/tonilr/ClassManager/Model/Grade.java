@@ -17,8 +17,12 @@ public class Grade {
     private Long id;
 
     private Double value;
+    
+    private String subject;
+
 
     private String description;
+    
 
     private LocalDate date;
 
@@ -34,15 +38,21 @@ public class Grade {
 	public Grade() {
 	}
 
-	public Grade(Long id, Double value, String description, LocalDate date, Student student, Class clazz) {
+
+
+	public Grade(Long id, Double value, String subject, String description, LocalDate date, Student student,
+			Class clazz) {
 		super();
 		this.id = id;
 		this.value = value;
+		this.subject = subject;
 		this.description = description;
 		this.date = date;
 		this.student = student;
 		this.clazz = clazz;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -91,6 +101,15 @@ public class Grade {
 	public void setClazz(Class clazz) {
 		this.clazz = clazz;
 	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
     
+	
     
 }

@@ -40,7 +40,7 @@ public class GradeService {
 		this.classRepository = classRepository;
 	}
 
-	public Grade registerGrade(Long studentId, Long classId, Double value, String description, String username) {
+	public Grade registerGrade(Long studentId, Long classId, String subject, Double value, String description, String username) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
         Class clazz = classRepository.findById(classId)
@@ -52,6 +52,7 @@ public class GradeService {
 
         Grade grade = new Grade();
         grade.setStudent(student);
+        grade.setSubject(subject);
         grade.setClazz(clazz);
         grade.setValue(value);
         grade.setDescription(description);

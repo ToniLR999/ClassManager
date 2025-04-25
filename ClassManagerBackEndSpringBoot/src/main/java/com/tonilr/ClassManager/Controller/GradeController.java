@@ -31,9 +31,10 @@ public class GradeController {
     public ResponseEntity<Grade> registerGrade(@RequestParam Long studentId,
                                                @RequestParam Long classId,
                                                @RequestParam Double value,
+                                               @RequestParam String subject,
                                                @RequestParam(required = false) String description) {
         String username = getUsername();
-        Grade grade = gradeService.registerGrade(studentId, classId, value, description, username);
+        Grade grade = gradeService.registerGrade(studentId, classId, subject, value, description, username);
         return ResponseEntity.ok(grade);
     }
 	
