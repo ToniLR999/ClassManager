@@ -83,6 +83,7 @@ public class ClassService {
         c.setName(request.getName());
         c.setDescription(request.getDescription());
         c.setSchedule(request.getSchedule());
+        c.setSubjects(request.getSubjects());
         Class updated = classRepository.save(c);
         return new ClassResponse(updated.getId(), updated.getName(), updated.getDescription() , c.getSubjects(), updated.getSchedule(), updated.getProfessor().getUsername());
     }

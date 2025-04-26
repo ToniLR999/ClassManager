@@ -67,6 +67,44 @@
       <textarea matInput [(ngModel)]="editClass.description" name="editDescription" required></textarea>
     </mat-form-field>
 
+    
+    <mat-form-field class="full-width">
+      <mat-label>Materias</mat-label>
+      <mat-chip-grid #chipList aria-label="Enter Subjects">
+        <mat-chip-row
+          *ngFor="let subject of editSubjects; trackBy: trackSubject"
+          [removable]="true"
+          (removed)="removeEditSubject(subject)"
+        >
+          {{subject}}
+          <button matChipRemove [attr.aria-label]="'remove ' + subject">
+            <mat-icon>x</mat-icon>
+          </button>
+        </mat-chip-row>
+        <input 
+          placeholder="Añadir materia..." 
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="addEditSubject($event)">
+      </mat-chip-grid>
+    </mat-form-field>
+    
+
+  <mat-form-field appearance="fill">
+    <mat-label>Fecha de inicio</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="editClass.schedule" name="date" required>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Hora de inicio</mat-label>
+    <input matInput [(ngModel)]="editSelectedTime" name="time" placeholder="HH:mm" required>
+  </mat-form-field>
+  
+  
+
     <button mat-raised-button color="primary" type="submit">Guardar</button>
     <button mat-button type="button" (click)="cancelEdit()">Cancelar</button>
   </form>
