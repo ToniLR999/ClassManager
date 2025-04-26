@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -11,18 +12,23 @@ public class ClassResponse {
     private Long id;
     private String name;
     private String description;
-    private LocalDateTime schedule;
+    private List<String> subjects;
+    private String schedule;
     private String professorUsername;
     
-    public ClassResponse(Long id, String name, String description, LocalDateTime schedule, String professorUsername) {
-    	this.id = id;
-    	this.name = name;
-    	this.description = description;
-    	this.schedule = schedule;
-    	this.professorUsername = professorUsername;
-    	
-    }
+
     
+	public ClassResponse(Long id, String name, String description, List<String> subjects, String schedule,
+			String professorUsername) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.subjects = subjects;
+		this.schedule = schedule;
+		this.professorUsername = professorUsername;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -41,10 +47,10 @@ public class ClassResponse {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public LocalDateTime getSchedule() {
+	public String getSchedule() {
 		return schedule;
 	}
-	public void setSchedule(LocalDateTime schedule) {
+	public void setSchedule(String schedule) {
 		this.schedule = schedule;
 	}
 	public String getProfessorUsername() {
@@ -54,6 +60,15 @@ public class ClassResponse {
 		this.professorUsername = professorUsername;
 	}
 
+	public List<String> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<String> subjects) {
+		this.subjects = subjects;
+	}
+
+	
 
 
 }

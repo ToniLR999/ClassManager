@@ -3,12 +3,14 @@ package com.tonilr.ClassManager.DTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class ClassRequest {
     private String name;
     private String description;
-    private LocalDateTime schedule;
+    private List<String> subjects;
+    private String schedule;
     
 	public String getName() {
 		return name;
@@ -22,12 +24,20 @@ public class ClassRequest {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public LocalDateTime getSchedule() {
+	public String getSchedule() {
 		return schedule;
 	}
-	public void setSchedule(LocalDateTime schedule) {
+	public void setSchedule(String schedule) {
 		this.schedule = schedule;
 	}
+	public List<String> getSubjects() {
+		return subjects;
+	}
+	public void setSubjects(List<String> subjects) {
+		this.subjects = subjects;
+	}
+	
+	
     
     
 }

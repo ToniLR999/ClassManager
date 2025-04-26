@@ -25,6 +25,11 @@ import { ProfileComponent } from './dashboard/profile/profile.component';
 import { AttendanceHistoryComponent } from './dashboard/attendance-history/attendance-history.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule,MatChipGrid } from '@angular/material/chips';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
 
 
 @NgModule({
@@ -51,7 +56,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatChipsModule,
+    MatChipGrid,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [AuthModule,   {
     provide: HTTP_INTERCEPTORS,

@@ -27,9 +27,11 @@ public class Class {
 
     private String name;
     private String description;
-    private LocalDateTime schedule;
+    private String schedule;
     
     @ElementCollection
+    @CollectionTable(name = "class_subjects", joinColumns = @JoinColumn(name = "class_id"))
+    @Column(name = "subject")
     private List<String> subjects;
 
 
@@ -49,7 +51,7 @@ public class Class {
 	public Class() {
 	}
 
-	public Class(Long id, String name, String description, LocalDateTime schedule, List<String> subjects,
+	public Class(Long id, String name, String description, String schedule, List<String> subjects,
 			User professor, Set<Student> students) {
 		super();
 		this.id = id;
@@ -85,11 +87,11 @@ public class Class {
 		this.description = description;
 	}
 
-	public LocalDateTime getSchedule() {
+	public String getSchedule() {
 		return schedule;
 	}
 
-	public void setSchedule(LocalDateTime schedule) {
+	public void setSchedule(String schedule) {
 		this.schedule = schedule;
 	}
 

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ClassService } from 'src/app/dashboard/classes/class.service';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
+
 
 @Component({
   selector: 'app-classes',
@@ -7,9 +10,16 @@ import { ClassService } from 'src/app/dashboard/classes/class.service';
   styleUrls: ['./classes.component.css']
 })
 export class ClassesComponent implements OnInit {
+  readonly addOnBlur = true;
+
   classes: any[] = [];
   filteredClasses: any[] = [];
   searchTerm = '';
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  subjects: string[] = [];
+
+  selectedDate: Date | null = null;
+  selectedTime: string = '';
 
   constructor(private classService: ClassService) {}
 
@@ -31,10 +41,18 @@ export class ClassesComponent implements OnInit {
     );
   }
 
-  newClass = {
+  newClass: { 
+    name: string; 
+    description: string; 
+    subjects: string[]; 
+    schedule: string; 
+    teacherId: number | null; 
+  } = {
     name: '',
     description: '',
-    teacherId: null, // o lo que uses para asignar al profesor actual
+    subjects: [],
+    schedule: '',
+    teacherId: null,
   };
   
   createClass() {
@@ -42,11 +60,26 @@ export class ClassesComponent implements OnInit {
       alert('Por favor, completa todos los campos');
       return;
     }
-  
+
+    const [hours, minutes] = this.selectedTime.split(':').map(Number);
+    const dateWithTime = new Date(this.selectedDate!);
+    dateWithTime.setHours(hours);
+    dateWithTime.setMinutes(minutes);
+    dateWithTime.setSeconds(0);
+    dateWithTime.setMilliseconds(0);
+
+    this.newClass.schedule = new Date().toISOString(); 
+
+    this.newClass.subjects = this.subjects;
+
     this.classService.createClass(this.newClass).subscribe({
       next: () => {
-        this.newClass = { name: '', description: '', teacherId: null };
+        this.newClass = { name: '', description: '',subjects: [],  schedule: ' ', teacherId: null };
         this.loadClasses();
+        this.selectedDate = null;
+        this.selectedTime = '';
+        this.subjects = [];
+
       },
       error: () => {
         alert('Error al crear la clase');
@@ -100,5 +133,20 @@ deleteClass(id: number) {
   });
 }
 
-  
+addSubject(event: MatChipInputEvent): void {
+  const value = (event.value || '').trim();
+  if (value) {
+    this.subjects.push(value);
+  }
+  event.chipInput!.clear();
+
+}
+
+removeSubject(subject: string): void {
+  const index = this.subjects.indexOf(subject);
+  if (index >= 0) {
+    this.subjects.splice(index, 1);
+  }
+}
+
 }

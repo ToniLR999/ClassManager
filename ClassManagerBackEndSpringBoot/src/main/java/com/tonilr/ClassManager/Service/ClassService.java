@@ -47,11 +47,12 @@ public class ClassService {
         Class newClass = new Class();
         newClass.setName(request.getName());
         newClass.setDescription(request.getDescription());
+        newClass.setSubjects(request.getSubjects());
         newClass.setSchedule(request.getSchedule());
         newClass.setProfessor(professor);
 
         Class saved = classRepository.save(newClass);
-        return new ClassResponse(saved.getId(), saved.getName(), saved.getDescription(), saved.getSchedule(), professor.getUsername());
+        return new ClassResponse(saved.getId(), saved.getName(), saved.getDescription(),saved.getSubjects(), saved.getSchedule(), professor.getUsername());
     }
 
     public List<ClassResponse> getClassesByProfessor(String username) {
@@ -60,7 +61,7 @@ public class ClassService {
 
         return classRepository.findByProfessor(professor)
                 .stream()
-                .map(c -> new ClassResponse(c.getId(), c.getName(), c.getDescription(), c.getSchedule(), professor.getUsername()))
+                .map(c -> new ClassResponse(c.getId(), c.getName(), c.getDescription(), c.getSubjects(), c.getSchedule(), professor.getUsername()))
                 .collect(Collectors.toList());
     }
     
@@ -70,7 +71,7 @@ public class ClassService {
         if (!c.getProfessor().getUsername().equals(username)) {
             throw new RuntimeException("Unauthorized access");
         }
-        return new ClassResponse(c.getId(), c.getName(), c.getDescription(), c.getSchedule(), c.getProfessor().getUsername());
+        return new ClassResponse(c.getId(), c.getName(), c.getDescription() ,c.getSubjects(), c.getSchedule(), c.getProfessor().getUsername());
     }
 
     public ClassResponse updateClass(Long id, ClassRequest request, String username) {
@@ -83,7 +84,7 @@ public class ClassService {
         c.setDescription(request.getDescription());
         c.setSchedule(request.getSchedule());
         Class updated = classRepository.save(c);
-        return new ClassResponse(updated.getId(), updated.getName(), updated.getDescription(), updated.getSchedule(), updated.getProfessor().getUsername());
+        return new ClassResponse(updated.getId(), updated.getName(), updated.getDescription() , c.getSubjects(), updated.getSchedule(), updated.getProfessor().getUsername());
     }
 
     public void deleteClass(Long id, String username) {

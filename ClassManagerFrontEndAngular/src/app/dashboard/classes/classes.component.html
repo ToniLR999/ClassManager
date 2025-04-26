@@ -11,14 +11,43 @@
     <textarea matInput [(ngModel)]="newClass.description" name="description" required></textarea>
   </mat-form-field>
 
-  <!-- Puedes ocultar este campo si el backend asigna el profesor automáticamente -->
-  <!--
-  <mat-form-field appearance="outline">
-    <mat-label>ID del profesor</mat-label>
-    <input matInput type="number" [(ngModel)]="newClass.teacherId" name="teacherId" />
-  </mat-form-field>
-  -->
+  <mat-form-field class="full-width">
+    <mat-label>Materias</mat-label>
+    <mat-chip-grid #chipList aria-label="Enter Subjects">
 
+
+      @for (subject of subjects; track subject) {
+        <mat-chip-row
+          [removable]="true"
+          (removed)="removeSubject(subject)"
+        >
+          {{subject}}
+          <button matChipRemove [attr.aria-label]="'remove ' + subject">
+            <mat-icon>x</mat-icon>
+          </button>
+        </mat-chip-row>
+      }
+      <input 
+        placeholder="Añadir materia..." 
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur"
+        (matChipInputTokenEnd)="addSubject($event)">
+    </mat-chip-grid>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Fecha de inicio</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" name="date" required>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Hora de inicio</mat-label>
+    <input matInput [(ngModel)]="selectedTime" name="time" placeholder="HH:mm" required>
+  </mat-form-field>
+  
   <button mat-raised-button color="primary" type="submit">Crear clase</button>
 </form>
 

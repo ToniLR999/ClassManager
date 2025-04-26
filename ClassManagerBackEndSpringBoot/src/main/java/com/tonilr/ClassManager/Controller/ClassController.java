@@ -35,6 +35,8 @@ public class ClassController {
     public ResponseEntity<ClassResponse> createClass(@RequestBody ClassRequest request) {
         String username = getUsernameFromContext();
         System.out.println("Username del profe: "+username);
+        System.out.println("Esta vacia la lista de materias?: "+request.getSubjects().isEmpty());
+
         return ResponseEntity.ok(classService.createClass(request, username));
     }
 
