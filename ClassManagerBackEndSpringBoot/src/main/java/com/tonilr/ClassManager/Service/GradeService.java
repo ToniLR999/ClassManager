@@ -58,7 +58,7 @@ public class GradeService {
         grade.setStudent(student);
         grade.setSubject(request.getSubject());
         grade.setClazz(clazz);
-        grade.setValue(request.getScore());
+        grade.setValue(request.getValue());
         grade.setDescription(request.getDescription());
         grade.setDate(LocalDate.now());
         Grade updated = gradeRepository.save(grade);

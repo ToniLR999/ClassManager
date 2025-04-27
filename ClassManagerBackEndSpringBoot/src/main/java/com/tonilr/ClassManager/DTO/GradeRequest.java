@@ -7,15 +7,15 @@ public class GradeRequest {
     private Long studentId;
     private Long classId;
     private String subject;
-    private Double score;
+    private Double value;
     private String description;
     
-	public GradeRequest(Long studentId, Long classId, String subject, Double score, String description) {
+	public GradeRequest(Long studentId, Long classId, String subject, Double value, String description) {
 		super();
 		this.studentId = studentId;
 		this.classId = classId;
 		this.subject = subject;
-		this.score = score;
+		this.value = value;
 		this.description = description;
 	}
 
@@ -43,12 +43,12 @@ public class GradeRequest {
 		this.subject = subject;
 	}
 
-	public Double getScore() {
-		return score;
+	public Double getValue() {
+		return value;
 	}
 
-	public void setScore(Double score) {
-		this.score = score;
+	public void setValue(Double value) {
+		this.value = value;
 	}
 
 	public String getDescription() {
