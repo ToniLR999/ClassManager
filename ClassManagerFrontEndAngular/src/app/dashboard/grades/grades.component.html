@@ -10,18 +10,24 @@
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Class</mat-label>
-    <mat-select [(ngModel)]="newGrade.classId" name="classId" required>
+    <mat-label>Clase</mat-label>
+    <mat-select [(ngModel)]="newGrade.classId" name="classId" required (selectionChange)="onClassSelected($event.value)">
       <mat-option *ngFor="let class of classes" [value]="class.id">
         {{ class.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  
 
   <mat-form-field appearance="outline">
     <mat-label>Materia</mat-label>
-    <input matInput [(ngModel)]="newGrade.subject" name="subject" required />
+    <mat-select [(ngModel)]="newGrade.subject" name="editSubject" required>
+      <mat-option *ngFor="let subject of subjects" [value]="subject">
+        {{ subject }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
+  
 
   <mat-form-field appearance="outline">
     <mat-label>Nota</mat-label>
@@ -57,8 +63,31 @@
   <h3>Editar calificación</h3>
   <form (ngSubmit)="updateGrade()" class="form">
     <mat-form-field appearance="outline">
+      <mat-label>Clase</mat-label>
+      <mat-select [(ngModel)]="editGrade.classId" name="editClassId" required (selectionChange)="onEditClassSelected($event.value)">
+        <mat-option *ngFor="let class of classes" [value]="class.id">
+          {{ class.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
       <mat-label>Materia</mat-label>
-      <input matInput [(ngModel)]="editGrade.subject" name="editSubject" required />
+      <mat-select [(ngModel)]="editGrade.subject" name="editSubject" required [disabled]="editSubjectsLoading">
+        
+        <mat-option *ngIf="editSubjectsLoading" disabled>
+          <mat-progress-spinner
+            diameter="20"
+            mode="indeterminate"
+            color="primary"
+            style="margin: auto;"
+          ></mat-progress-spinner>
+        </mat-option>
+    
+        <mat-option *ngFor="let subject of editSubjects" [value]="subject">
+          {{ subject }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline">

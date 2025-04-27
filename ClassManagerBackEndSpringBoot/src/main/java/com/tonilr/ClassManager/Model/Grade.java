@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "grades")
 public class Grade {

@@ -3,6 +3,7 @@ package com.tonilr.ClassManager.Service;
 
 import com.tonilr.ClassManager.DTO.ClassRequest;
 import com.tonilr.ClassManager.DTO.ClassResponse;
+import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Model.Class;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Repository.ClassRepository;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -95,5 +97,16 @@ public class ClassService {
             throw new RuntimeException("Unauthorized access");
         }
         classRepository.delete(c);
+    }
+    
+    public List<String> getSubjectsByClass(Long classId, String username) {
+        Class clazz = classRepository.findById(classId)
+                .orElseThrow(() -> new RuntimeException("Class not found"));
+
+        if (!clazz.getProfessor().getUsername().equals(username)) {
+            throw new RuntimeException("Unauthorized access to class students");
+        }
+
+        return clazz.getSubjects();
     }
 }

@@ -23,6 +23,10 @@ export class GradeService {
     return this.http.get<any[]>(`${this.apiUrl}/class/${classId}`);
   }
 
+  getSubjectsByClass(classId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/classes/GetSubjects-by-class/${classId}`);
+  }
+
   createGrade(gradeData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, gradeData);
   }

@@ -1,5 +1,6 @@
 package com.tonilr.ClassManager.Service;
 
+import com.tonilr.ClassManager.DTO.GradeResponse;
 import com.tonilr.ClassManager.Model.Class;
 import com.tonilr.ClassManager.Model.Grade;
 import com.tonilr.ClassManager.Repository.ClassRepository;
@@ -64,7 +65,6 @@ public class ReportService {
             table.addCell(grade.getStudent().getFullName());
             table.addCell(grade.getValue().toString());
             table.addCell(grade.getDescription() != null ? grade.getDescription() : "-");
-            table.addCell(grade.getDate().toString());
         }
 
         document.add(table);

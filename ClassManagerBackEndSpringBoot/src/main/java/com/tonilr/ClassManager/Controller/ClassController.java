@@ -2,6 +2,7 @@ package com.tonilr.ClassManager.Controller;
 
 import com.tonilr.ClassManager.DTO.ClassRequest;
 import com.tonilr.ClassManager.DTO.ClassResponse;
+import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Service.ClassService;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/classes")
@@ -79,5 +81,11 @@ public class ClassController {
         String username = getUsernameFromContext();
         classService.deleteClass(id, username);
         return ResponseEntity.noContent().build();
+    }
+    
+    @GetMapping("/GetSubjects-by-class/{classId}")
+    public ResponseEntity<List<String>> getSubjectsByClass(@PathVariable Long classId) {
+        String username = getUsernameFromContext();
+        return ResponseEntity.ok(classService.getSubjectsByClass(classId, username));
     }
 }

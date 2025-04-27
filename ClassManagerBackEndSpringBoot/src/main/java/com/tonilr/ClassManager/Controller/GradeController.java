@@ -1,13 +1,15 @@
 package com.tonilr.ClassManager.Controller;
 
+import com.tonilr.ClassManager.DTO.GradeRequest;
+import com.tonilr.ClassManager.DTO.GradeResponse;
 import com.tonilr.ClassManager.Model.Grade;
+import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Service.GradeService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,18 +30,13 @@ public class GradeController {
 	}
 
 	@PostMapping("/register")
-    public ResponseEntity<Grade> registerGrade(@RequestParam Long studentId,
-                                               @RequestParam Long classId,
-                                               @RequestParam Double value,
-                                               @RequestParam String subject,
-                                               @RequestParam(required = false) String description) {
+    public ResponseEntity<GradeResponse> registerGrade(@RequestBody GradeRequest gradeRequest) {
         String username = getUsername();
-        Grade grade = gradeService.registerGrade(studentId, classId, subject, value, description, username);
-        return ResponseEntity.ok(grade);
+        return ResponseEntity.ok(gradeService.registerGrade(gradeRequest, username));
     }
 	
     @PutMapping("/{id}")
-    public ResponseEntity<Grade> updateGrade(@PathVariable Long id, @RequestParam Double score,@RequestParam String subject) {
+    public ResponseEntity<GradeResponse> updateGrade(@PathVariable Long id, @RequestParam Double score,@RequestParam String subject) {
         return ResponseEntity.ok(gradeService.updateGrade(id, score, subject));
     }
 
@@ -50,7 +47,7 @@ public class GradeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Grade>> getAllGrades() {
+    public ResponseEntity<List<GradeResponse>> getAllGrades() {
         return ResponseEntity.ok(gradeService.getAllGrades());
     }
 	
@@ -66,8 +63,8 @@ public class GradeController {
 
     private String getUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails userDetails) {
-            return userDetails.getUsername();
+        if (principal instanceof User user) {
+            return user.getUsername();
         }
         return principal.toString();
     }

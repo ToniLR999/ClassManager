@@ -1,6 +1,8 @@
 package com.tonilr.ClassManager.Service;
 
 
+import com.tonilr.ClassManager.DTO.GradeRequest;
+import com.tonilr.ClassManager.DTO.GradeResponse;
 import com.tonilr.ClassManager.DTO.StudentRequest;
 import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Model.Class;
@@ -12,10 +14,12 @@ import com.tonilr.ClassManager.Repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,10 +44,10 @@ public class GradeService {
 		this.classRepository = classRepository;
 	}
 
-	public Grade registerGrade(Long studentId, Long classId, String subject, Double value, String description, String username) {
-        Student student = studentRepository.findById(studentId)
+	public GradeResponse registerGrade(GradeRequest request, String username) {
+        Student student = studentRepository.findById(request.getStudentId())
                 .orElseThrow(() -> new RuntimeException("Student not found"));
-        Class clazz = classRepository.findById(classId)
+        Class clazz = classRepository.findById(request.getClassId())
                 .orElseThrow(() -> new RuntimeException("Class not found"));
 
         if (!clazz.getProfessor().getUsername().equals(username)) {
@@ -52,28 +56,44 @@ public class GradeService {
 
         Grade grade = new Grade();
         grade.setStudent(student);
-        grade.setSubject(subject);
+        grade.setSubject(request.getSubject());
         grade.setClazz(clazz);
-        grade.setValue(value);
-        grade.setDescription(description);
+        grade.setValue(request.getScore());
+        grade.setDescription(request.getDescription());
         grade.setDate(LocalDate.now());
-        return gradeRepository.save(grade);
-    }
+        Grade updated = gradeRepository.save(grade);
+        return new GradeResponse(updated.getId(),updated.getSubject(),updated.getValue(),updated.getDescription(),updated.getStudent().getFullName(),updated.getClass().getName());
+        }
 	
-    public Grade updateGrade(Long id, Double score, String subject) {
+    public GradeResponse updateGrade(Long id, Double score, String subject) {
         Grade grade = gradeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Grade not found"));
         grade.setDescription(subject);
         grade.setValue(score);
-        return gradeRepository.save(grade);
+        Grade updated = gradeRepository.save(grade);
+        return new GradeResponse(updated.getId(),updated.getSubject(),updated.getValue(),updated.getDescription(),updated.getStudent().getFullName(),updated.getClass().getName());
     }
 
     public void deleteGrade(Long id) {
     	gradeRepository.deleteById(id);
     }
 
-    public List<Grade> getAllGrades() {
-        return gradeRepository.findAll();
+    public List<GradeResponse> getAllGrades() {
+        List<Grade> grades = gradeRepository.findAll();
+        return grades.stream()
+                .map(this::convertToGradeResponse)
+                .collect(Collectors.toList());
+    }
+    
+    private GradeResponse convertToGradeResponse(Grade grade) {
+        return new GradeResponse(
+                grade.getId(),
+                grade.getSubject(),
+                grade.getValue(),
+                grade.getDescription(),
+                grade.getStudent().getFullName(), // Suponiendo que Grade tiene relación con Student
+                grade.getClass().getName() // Suponiendo que Grade tiene relación con Class
+        );
     }
 	
     public List<Grade> getGradesByStudent(Long studentId) {

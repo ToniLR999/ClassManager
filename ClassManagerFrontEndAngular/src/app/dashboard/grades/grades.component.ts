@@ -12,6 +12,8 @@ export class GradesComponent implements OnInit {
   grades: any[] = [];
   students: any[] = [];
   classes: any[] = [];
+  subjects: any[] = [];
+
 
 
   newGrade = {
@@ -25,9 +27,14 @@ export class GradesComponent implements OnInit {
   editMode = false;
   editGradeId: number | null = null;
   editGrade = {
+    classId: null,
     subject: '',
     score: null
   };
+  editSubjects: string[] = [];
+  editSubjectsLoading = false;
+
+
 
   constructor(
     private gradeService: GradeService,
@@ -52,6 +59,23 @@ export class GradesComponent implements OnInit {
     });
   }
 
+  onClassSelected(classId: number | null) {
+    if (classId !== null) {
+      this.gradeService.getSubjectsByClass(classId).subscribe({
+        next: (subjects) => {
+          this.subjects = subjects;
+        },
+        error: (err) => {
+          console.error('Error cargando subjects:', err);
+          this.subjects = [];
+        }
+      });
+    } else {
+      this.subjects = [];
+    }
+  }
+  
+
   createGrade() {
     this.gradeService.createGrade(this.newGrade).subscribe(() => {
       this.newGrade = { studentId: null, classId: null, subject: '', value: null, description: ''};
@@ -62,8 +86,54 @@ export class GradesComponent implements OnInit {
   startEdit(grade: any) {
     this.editMode = true;
     this.editGradeId = grade.id;
-    this.editGrade = { subject: grade.subject, score: grade.score };
+    this.editGrade = {
+      classId: grade.classId,
+      subject: grade.subject,
+      score: grade.score
+    };
+  
+    if (grade.classId) {
+      this.editSubjectsLoading = true;
+      this.gradeService.getSubjectsByClass(grade.classId).subscribe({
+        next: (subjects) => {
+          this.editSubjects = subjects;
+          this.editSubjectsLoading = false;
+        },
+        error: (err) => {
+          console.error('Error cargando materias de la clase:', err);
+          this.editSubjects = [];
+          this.editSubjectsLoading = false;
+        }
+      });
+    }
   }
+  
+  
+
+  onEditClassSelected(classId: number | null) {
+    if (classId !== null) {
+      this.editSubjectsLoading = true;
+      this.editGrade.subject = ''; // Limpiar el campo de materia
+  
+      this.gradeService.getSubjectsByClass(classId).subscribe({
+        next: (subjects) => {
+          this.editSubjects = subjects;
+          this.editSubjectsLoading = false;
+        },
+        error: (err) => {
+          console.error('Error cargando materias de la clase:', err);
+          this.editSubjects = [];
+          this.editSubjectsLoading = false;
+        }
+      });
+    } else {
+      this.editSubjects = [];
+      this.editGrade.subject = '';
+    }
+  }
+  
+  
+  
 
   updateGrade() {
     if (!this.editGradeId) return;
@@ -76,7 +146,7 @@ export class GradesComponent implements OnInit {
   cancelEdit() {
     this.editMode = false;
     this.editGradeId = null;
-    this.editGrade = { subject: '', score: null };
+    this.editGrade = {classId: null, subject: '', score: null };
   }
 
   deleteGrade(id: number) {
