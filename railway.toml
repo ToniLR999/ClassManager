@@ -1,9 +1,0 @@
-[build]
-builder = "nixpacks"
-buildCommand = "cd ClassManagerBackEndSpringBoot && mvn clean package -DskipTests"
-
-[deploy]
-startCommand = "cd ClassManagerBackEndSpringBoot && java -jar target/ClassManager-0.0.1-SNAPSHOT.jar"
-healthcheckPath = "/"
-healthcheckTimeout = 300
-restartPolicyType = "on_failure"
