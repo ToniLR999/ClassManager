@@ -1,9 +1,13 @@
 [build]
 builder = "nixpacks"
-buildCommand = "cd ClassManagerBackEndSpringBoot && mvn clean package -DskipTests"
+buildCommand = "cd ClassManagerBackEndSpringBoot && mvn clean compile"
 
 [deploy]
-startCommand = "cd ClassManagerBackEndSpringBoot && java -jar target/ClassManager-0.0.1-SNAPSHOT.jar"
-healthcheckPath = "/health"
+startCommand = "cd ClassManagerBackEndSpringBoot && mvn spring-boot:run"
+healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "on_failure"
+
+# Especificar versión de Java
+[phases.setup]
+nixPkgs = ["openjdk17", "maven"]
