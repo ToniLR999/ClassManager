@@ -1,8 +1,0 @@
-[phases.setup]
-nixPkgs = ["openjdk17", "maven"]
-
-[phases.install]
-cmds = ["cd ClassManagerBackEndSpringBoot && mvn clean package -DskipTests"]
-
-[start]
-cmd = "cd ClassManagerBackEndSpringBoot && java -jar target/ClassManager-0.0.1-SNAPSHOT.jar"
