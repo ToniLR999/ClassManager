@@ -5,18 +5,14 @@ import com.tonilr.ClassManager.DTO.AuthRequest;
 import com.tonilr.ClassManager.DTO.RegisterRequest;
 import com.tonilr.ClassManager.Service.AuthService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
 	@Autowired

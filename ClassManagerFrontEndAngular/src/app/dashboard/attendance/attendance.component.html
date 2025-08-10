@@ -18,4 +18,9 @@
 
     <button mat-raised-button color="primary" type="submit">Marcar asistencia</button>
   </form>
+
+    <!-- Mensaje de feedback -->
+    <div *ngIf="feedbackMessage" class="feedback-message" [ngClass]="feedbackType">
+      {{ feedbackMessage }}
+    </div>
 </div>

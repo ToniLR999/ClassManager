@@ -3,26 +3,19 @@ package com.tonilr.ClassManager.Service;
 
 import com.tonilr.ClassManager.DTO.GradeRequest;
 import com.tonilr.ClassManager.DTO.GradeResponse;
-import com.tonilr.ClassManager.DTO.StudentRequest;
-import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Model.Class;
 import com.tonilr.ClassManager.Model.Grade;
 import com.tonilr.ClassManager.Model.Student;
 import com.tonilr.ClassManager.Repository.ClassRepository;
 import com.tonilr.ClassManager.Repository.GradeRepository;
 import com.tonilr.ClassManager.Repository.StudentRepository;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class GradeService {
 
 	@Autowired
@@ -91,8 +84,8 @@ public class GradeService {
                 grade.getSubject(),
                 grade.getValue(),
                 grade.getDescription(),
-                grade.getStudent().getFullName(), // Suponiendo que Grade tiene relación con Student
-                grade.getClass().getName() // Suponiendo que Grade tiene relación con Class
+                grade.getStudent().getFullName(),
+                grade.getClass().getName()
         );
     }
 	

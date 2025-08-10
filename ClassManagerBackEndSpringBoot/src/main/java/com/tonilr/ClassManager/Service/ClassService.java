@@ -3,26 +3,18 @@ package com.tonilr.ClassManager.Service;
 
 import com.tonilr.ClassManager.DTO.ClassRequest;
 import com.tonilr.ClassManager.DTO.ClassResponse;
-import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Model.Class;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Repository.ClassRepository;
 import com.tonilr.ClassManager.Repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ClassService {
 
 	@Autowired

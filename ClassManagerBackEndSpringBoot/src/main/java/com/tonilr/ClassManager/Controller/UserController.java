@@ -3,16 +3,12 @@ package com.tonilr.ClassManager.Controller;
 import com.tonilr.ClassManager.DTO.UserDTO;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +18,6 @@ import com.tonilr.ClassManager.Service.UserService;
 
 @RestController
 @RequestMapping("/users")
-@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;

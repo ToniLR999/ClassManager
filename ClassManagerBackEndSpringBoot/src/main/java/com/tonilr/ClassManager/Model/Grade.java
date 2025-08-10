@@ -1,9 +1,6 @@
 package com.tonilr.ClassManager.Model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
 @Entity

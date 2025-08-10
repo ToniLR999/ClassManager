@@ -14,6 +14,10 @@ export class AttendanceComponent implements OnInit {
   students: any[] = [];
   selectedClassId!: number;
   selectedStudentId!: number;
+  
+  // Variables para el feedback
+  feedbackMessage: string = '';
+  feedbackType: 'success' | 'error' = 'success';
 
   constructor(
     private attendanceService: AttendanceService,
@@ -50,9 +54,22 @@ export class AttendanceComponent implements OnInit {
     this.attendanceService.registerAttendance(attendanceData).subscribe({
       next: () => {
         console.log("✅ Attendance marked successfully");
+        this.showFeedback('✅ Asistencia marcada exitosamente', 'success');
       },
       error: (error) => {
         console.error("❌ Error marking attendance:", error);
+        this.showFeedback('❌ Error al marcar la asistencia', 'error');
       }
-    });  }
+    });
+  }
+
+  private showFeedback(message: string, type: 'success' | 'error') {
+    this.feedbackMessage = message;
+    this.feedbackType = type;
+    
+    // Limpiar el mensaje después de 3 segundos
+    setTimeout(() => {
+      this.feedbackMessage = '';
+    }, 3000);
+  }
 }

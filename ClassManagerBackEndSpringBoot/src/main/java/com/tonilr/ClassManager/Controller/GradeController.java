@@ -5,7 +5,6 @@ import com.tonilr.ClassManager.DTO.GradeResponse;
 import com.tonilr.ClassManager.Model.Grade;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Service.GradeService;
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/grades")
-@RequiredArgsConstructor
 public class GradeController {
 
 	@Autowired
@@ -42,7 +40,7 @@ public class GradeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGrade(@PathVariable Long id) {
-    	gradeService.deleteGrade(id);
+    gradeService.deleteGrade(id);
         return ResponseEntity.noContent().build();
     }
 

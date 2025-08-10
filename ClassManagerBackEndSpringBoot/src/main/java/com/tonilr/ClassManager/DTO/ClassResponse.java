@@ -1,13 +1,7 @@
 package com.tonilr.ClassManager.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
-@AllArgsConstructor
 public class ClassResponse {
     private Long id;
     private String name;

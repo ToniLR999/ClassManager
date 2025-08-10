@@ -4,17 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tonilr.ClassManager.DTO.StudentRequest;
 import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Service.StudentService;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import com.tonilr.ClassManager.Model.Student;
 import com.tonilr.ClassManager.Model.User;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +18,6 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/students")
-@RequiredArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class StudentController {
 

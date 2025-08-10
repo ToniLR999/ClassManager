@@ -2,28 +2,20 @@ package com.tonilr.ClassManager.Controller;
 
 import com.tonilr.ClassManager.DTO.ClassRequest;
 import com.tonilr.ClassManager.DTO.ClassResponse;
-import com.tonilr.ClassManager.DTO.StudentResponse;
 import com.tonilr.ClassManager.Service.ClassService;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import com.tonilr.ClassManager.Model.Class;
 import com.tonilr.ClassManager.Model.User;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/classes")
-@RequiredArgsConstructor
 public class ClassController {
 
 	@Autowired
@@ -51,7 +43,7 @@ public class ClassController {
     
     @GetMapping("/getClasses/paginated")
     public ResponseEntity<Page<Class>> getClasses(@RequestParam(defaultValue = "0") int page,
-                                                         @RequestParam(defaultValue = "10") int size) {
+                                                        @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(classService.getAllClasses(pageable));
     }

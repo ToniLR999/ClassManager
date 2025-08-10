@@ -12,7 +12,7 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <mat-label>Materias</mat-label>
+    <mat-label>Añadir materia</mat-label>
     <mat-chip-grid #chipList aria-label="Enter Subjects">
 
 
@@ -28,7 +28,6 @@
         </mat-chip-row>
       }
       <input 
-        placeholder="Añadir materia..." 
         [matChipInputFor]="chipList"
         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
         [matChipInputAddOnBlur]="addOnBlur"
@@ -44,8 +43,8 @@
   </mat-form-field>
   
   <mat-form-field appearance="fill">
-    <mat-label>Hora de inicio</mat-label>
-    <input matInput [(ngModel)]="selectedTime" name="time" placeholder="HH:mm" required>
+    <mat-label>Hora de inicio (HH:mm)</mat-label>
+    <input matInput [(ngModel)]="selectedTime" name="time" required>
   </mat-form-field>
   
   <button mat-raised-button color="primary" type="submit">Crear clase</button>
@@ -118,16 +117,15 @@
     matInput
     [(ngModel)]="searchTerm"
     (input)="onSearchChange()"
-    placeholder="Nombre de clase"
   />
 </mat-form-field>
 
 <div class="class-list">
   <mat-card *ngFor="let clase of filteredClasses" class="class-card">
-    <mat-card-title>{{ clase.name }}</mat-card-title>
+    <mat-card-title><strong>Clase: </strong>{{ clase.name }}</mat-card-title>
     <mat-card-content>
       <p><strong>Descripción:</strong> {{ clase.description }}</p>
-      <p><strong>Profesor:</strong> {{ clase.teacherName }}</p>   
+      <p><strong>Profesor:</strong> {{ clase.professorUsername }}</p>   
     </mat-card-content>
     <mat-card-actions>
       <button mat-button color="primary" (click)="startEdit(clase)">Editar</button>

@@ -1,18 +1,11 @@
 package com.tonilr.ClassManager.Model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Data
-@NoArgsConstructor
 @Entity
-@Table(name = "attendance",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "class_id", "date"}))
+@Table(name = "attendance", uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "class_id", "date"}))
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Attendance {
 

@@ -7,16 +7,12 @@ import com.tonilr.ClassManager.Model.Student;
 import com.tonilr.ClassManager.Repository.AttendanceRepository;
 import com.tonilr.ClassManager.Repository.ClassRepository;
 import com.tonilr.ClassManager.Repository.StudentRepository;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class AttendanceService {
 
 	@Autowired
