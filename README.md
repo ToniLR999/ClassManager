@@ -59,13 +59,11 @@ Una aplicación completa de gestión académica desarrollada con **Angular 17** 
 - **Spring Data JPA** - Persistencia de datos
 - **PostgreSQL** - Base de datos
 - **JWT** - Tokens de autenticación
-- **Lombok** - Reducción de código boilerplate
 
 ### DevOps
 - **Netlify** - Despliegue frontend
 - **Railway** - Despliegue backend
 - **GitHub** - Control de versiones
-- **Docker** - Containerización
 
 ## 🚀 Instalación y Configuración
 

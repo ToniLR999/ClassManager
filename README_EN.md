@@ -59,13 +59,11 @@ A complete academic management application developed with **Angular 17** and **S
 - **Spring Data JPA** - Data persistence
 - **PostgreSQL** - Database
 - **JWT** - Authentication tokens
-- **Lombok** - Boilerplate code reduction
 
 ### DevOps
 - **Netlify** - Frontend deployment
 - **Railway** - Backend deployment
 - **GitHub** - Version control
-- **Docker** - Containerization
 
 ## 🚀 Installation and Setup
 
