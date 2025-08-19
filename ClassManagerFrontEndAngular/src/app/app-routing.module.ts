@@ -11,15 +11,18 @@ import { ClassAssignmentComponent } from './dashboard/class-assignment/class-ass
 import { AttendanceComponent } from './dashboard/attendance/attendance.component';
 import { AttendanceHistoryComponent } from './dashboard/attendance-history/attendance-history.component';
 import { ProfileComponent } from './dashboard/profile/profile.component';
+import { MaintenanceInfoComponent } from './maintenance-info/maintenance-info.component';
+import { MaintenanceGuard } from './shared/maintenance.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent, canActivate: [MaintenanceGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [MaintenanceGuard] },
+  { path: 'maintenance', component: MaintenanceInfoComponent },
 
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, MaintenanceGuard],
     children: [
       { path: '', redirectTo: 'classes', pathMatch: 'full' }, // Ruta por defecto
       { path: 'classes', component: ClassesComponent },

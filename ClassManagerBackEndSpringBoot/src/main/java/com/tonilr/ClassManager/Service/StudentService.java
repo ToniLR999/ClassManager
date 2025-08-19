@@ -14,8 +14,10 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class StudentService {
 	
 	@Autowired
@@ -31,6 +33,7 @@ public class StudentService {
 		this.classRepository = classRepository;
 	}
 
+	@Transactional
 	public StudentResponse create(StudentRequest request) {
         Student student = new Student();
         student.setFirstName(request.getFirstName());
@@ -56,6 +59,7 @@ public class StudentService {
                 .orElseThrow(() -> new RuntimeException("Student not found"));
     }
 
+    @Transactional
     public StudentResponse update(Long id, StudentRequest request) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
@@ -65,10 +69,12 @@ public class StudentService {
         return toResponse(studentRepository.save(student));
     }
 
+    @Transactional
     public void delete(Long id) {
         studentRepository.deleteById(id);
     }
 
+    @Transactional
     public void assignToClass(Long studentId, Long classId, String username) {
         Class clazz = classRepository.findById(classId)
                 .orElseThrow(() -> new RuntimeException("Class not found"));
@@ -87,6 +93,7 @@ public class StudentService {
         studentRepository.save(student);
     }
     
+    @Transactional
     public void removeFromClass(Long studentId, Long classId, String username) {
         Class clazz = classRepository.findById(classId)
                 .orElseThrow(() -> new RuntimeException("Class not found"));

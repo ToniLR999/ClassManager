@@ -15,6 +15,7 @@ export class MaintenanceInfoComponent implements OnInit, OnDestroy {
   maintenanceInfo: MaintenanceInfo | null = null;
   isLoading = true; 
   error = false;
+  debugInfo: any = null;
   private interval: any;
 
   constructor(private http: HttpClient) {}
@@ -35,20 +36,27 @@ export class MaintenanceInfoComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.error = false;
 
-    this.http.get(`${environment.apiUrl}/api/app-status/status`)
+    console.log('MaintenanceInfo: Cargando información del sistema...');
+
+    this.http.get(`${environment.apiUrl}/api/system/status`)
       .subscribe({
         next: (response: any) => {
+          console.log('MaintenanceInfo: Respuesta del servidor:', response);
+          this.debugInfo = response;
+          
           this.maintenanceInfo = {
-            status: response.status || 'UNKNOWN',
-            schedule: response.schedule || 'N/A',
-            nextStart: response.nextStart || 'N/A',
-            scheduleStatus: response.scheduleStatus || 'UNKNOWN',
+            status: response.active ? 'UP' : 'DOWN',
+            schedule: 'L-V 10:00-19:00 (Europe/Madrid)',
+            nextStart: 'N/A',
+            scheduleStatus: response.active ? 'ACTIVO' : 'INACTIVO',
             message: this.generateMessage(response)
           };
+          
+          console.log('MaintenanceInfo: Estado procesado:', this.maintenanceInfo);
           this.isLoading = false;
         },
         error: (err) => {
-          console.error('Error loading maintenance info:', err);
+          console.error('MaintenanceInfo: Error loading maintenance info:', err);
           this.error = true;
           this.isLoading = false;
         }
@@ -56,8 +64,14 @@ export class MaintenanceInfoComponent implements OnInit, OnDestroy {
   }
 
   private generateMessage(response: any): string {
-    if (response.status === 'UP' && response.scheduleStatus === 'ACTIVO') {
+    console.log('MaintenanceInfo: Generando mensaje para:', response);
+    
+    if (response.active) {
       return 'La aplicación está funcionando normalmente.';
+    }
+
+    if (response.isProduction === false) {
+      return 'La aplicación está en modo desarrollo y debería estar activa.';
     }
 
     if (response.scheduleStatus === 'INACTIVO') {

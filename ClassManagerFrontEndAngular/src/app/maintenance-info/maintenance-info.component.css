@@ -51,6 +51,7 @@
   
   .status-card.status-active {
     border-left: 5px solid #4CAF50;
+  }
   
   .status-card.status-maintenance {
     border-left: 5px solid #FF9800;
@@ -228,6 +229,40 @@
     color: #666666;
   }
   
+  /* Debug styles */
+  .debug-card {
+    background: #1e1e1e;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  .debug-card h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #00ff00;
+  }
+  
+  .debug-content {
+    background: #2d2d2d;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #444;
+  }
+  
+  .debug-content pre {
+    margin: 0;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
   @keyframes pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.1); }
@@ -250,5 +285,4 @@
     .status-card, .info-card, .action-card {
       padding: 20px;
     }
-  }
   }

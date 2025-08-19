@@ -16,7 +16,7 @@ public class PasswordResetToken {
 
     private String token;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
     private LocalDateTime expiryDate;

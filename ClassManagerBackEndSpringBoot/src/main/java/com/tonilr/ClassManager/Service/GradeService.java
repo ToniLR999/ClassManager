@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class GradeService {
 
 	@Autowired
@@ -37,6 +39,7 @@ public class GradeService {
 		this.classRepository = classRepository;
 	}
 
+	@Transactional
 	public GradeResponse registerGrade(GradeRequest request, String username) {
         Student student = studentRepository.findById(request.getStudentId())
                 .orElseThrow(() -> new RuntimeException("Student not found"));
@@ -58,6 +61,7 @@ public class GradeService {
         return new GradeResponse(updated.getId(),updated.getSubject(),updated.getValue(),updated.getDescription(),updated.getStudent().getFullName(),updated.getClass().getName());
         }
 	
+    @Transactional
     public GradeResponse updateGrade(Long id, Double score, String subject) {
         Grade grade = gradeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Grade not found"));
@@ -67,6 +71,7 @@ public class GradeService {
         return new GradeResponse(updated.getId(),updated.getSubject(),updated.getValue(),updated.getDescription(),updated.getStudent().getFullName(),updated.getClass().getName());
     }
 
+    @Transactional
     public void deleteGrade(Long id) {
     	gradeRepository.deleteById(id);
     }

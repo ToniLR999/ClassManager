@@ -33,6 +33,14 @@
           </div>
         </div>
       </div>
+
+      <!-- DEBUG INFO -->
+      <div class="debug-card" *ngIf="debugInfo">
+        <h3>🐛 Información de Debug</h3>
+        <div class="debug-content">
+          <pre>{{ debugInfo | json }}</pre>
+        </div>
+      </div>
   
       <div class="info-card">
         <h3>📋 Información para el usuario</h3>

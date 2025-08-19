@@ -33,6 +33,13 @@ public class JwtAuthFilter extends OncePerRequestFilter{
         this.userRepository = userRepository;
     }
     
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return path.startsWith("/auth/") || 
+               path.equals("/api/system/status") || 
+               path.equals("/actuator/health");
+    }
 	
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

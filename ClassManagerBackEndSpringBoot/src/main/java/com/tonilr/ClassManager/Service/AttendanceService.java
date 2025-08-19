@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class AttendanceService {
 
 	@Autowired
@@ -33,8 +35,8 @@ public class AttendanceService {
 		this.studentRepository = studentRepository;
 	}
 
-	public void markAttendance(Long studentId, Long classId, String username) {
-		System.out.println("Marking Attendace");
+	@Transactional
+    public void markAttendance(Long studentId, Long classId, String username) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 

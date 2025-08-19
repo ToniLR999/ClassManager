@@ -9,12 +9,16 @@ import com.tonilr.ClassManager.Repository.ClassRepository;
 import com.tonilr.ClassManager.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class ClassService {
 
 	@Autowired
@@ -34,6 +38,8 @@ public class ClassService {
         return classRepository.findAll(pageable);
     }
     
+	@Transactional
+	@CacheEvict(value = "classesByProfessor", key = "#username")
 	public ClassResponse createClass(ClassRequest request, String username) {
         User professor = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Professor not found"));
@@ -49,6 +55,7 @@ public class ClassService {
         return new ClassResponse(saved.getId(), saved.getName(), saved.getDescription(),saved.getSubjects(), saved.getSchedule(), professor.getUsername());
     }
 
+    @Cacheable(value = "classesByProfessor", key = "#username")
     public List<ClassResponse> getClassesByProfessor(String username) {
         User professor = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Professor not found"));
@@ -68,6 +75,8 @@ public class ClassService {
         return new ClassResponse(c.getId(), c.getName(), c.getDescription() ,c.getSubjects(), c.getSchedule(), c.getProfessor().getUsername());
     }
 
+    @Transactional
+    @CacheEvict(value = "classesByProfessor", key = "#username")
     public ClassResponse updateClass(Long id, ClassRequest request, String username) {
         Class c = classRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Class not found"));
@@ -82,6 +91,8 @@ public class ClassService {
         return new ClassResponse(updated.getId(), updated.getName(), updated.getDescription() , c.getSubjects(), updated.getSchedule(), updated.getProfessor().getUsername());
     }
 
+    @Transactional
+    @CacheEvict(value = "classesByProfessor", key = "#username")
     public void deleteClass(Long id, String username) {
         Class c = classRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Class not found"));
