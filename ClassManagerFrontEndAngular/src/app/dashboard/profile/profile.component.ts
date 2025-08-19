@@ -23,10 +23,14 @@ export class ProfileComponent implements OnInit {
       if (user) {
         this.user = { ...user };
       } else {
-        // Si no hay usuario aún, lo refrescamos
-        this.authService.refreshCurrentUser();
+        // Si no hay usuario, usar datos del localStorage
+        const localUser = this.authService.getCurrentUser();
+        if (localUser) {
+          this.user = { ...localUser };
+        }
       }
-    });  }
+    });
+  }
 
   updateProfile() {
     const payload = {
@@ -37,7 +41,10 @@ export class ProfileComponent implements OnInit {
     this.userService.updateSelf(payload).subscribe({
       next: (res) => {
         this.snack.open('Perfil actualizado', 'Cerrar', { duration: 2000 });
-        this.authService.refreshCurrentUser();
+        // Solo refrescar si realmente es necesario
+        if (this.authService.isAuthenticated()) {
+          this.authService.refreshCurrentUser();
+        }
       },
       error: () => {
         this.snack.open('Error al actualizar', 'Cerrar', { duration: 3000 });

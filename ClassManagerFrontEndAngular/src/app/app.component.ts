@@ -11,12 +11,14 @@ export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService) {}
 
-
   ngOnInit(): void {
+    // Solo verificar autenticación sin hacer llamadas HTTP automáticas
     if (this.authService.isAuthenticated()) {
-      this.authService.refreshCurrentUser();
-      const user = this.authService.currentUser$;
-      console.log(this.authService.currentUser$);
+      // Usar datos del localStorage en lugar de hacer llamada HTTP
+      const user = this.authService.getCurrentUser();
+      console.log('Usuario autenticado:', user);
+    } else {
+      console.log('No hay usuario autenticado');
     }
   }
 }
