@@ -13,6 +13,7 @@ import com.tonilr.ClassManager.Model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import java.util.List;
 import java.util.Set;
 
@@ -34,15 +35,23 @@ public class StudentController {
         return ResponseEntity.ok(studentService.create(request));
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<StudentResponse>> getAll() {
-        return ResponseEntity.ok(studentService.getAll());
-    }
+    // ELIMINADO: @GetMapping("/all") - PELIGROSO para memoria
+    // En su lugar, usar siempre paginación
     
     @GetMapping
-    public ResponseEntity<Page<Student>> getStudents(@RequestParam(defaultValue = "0") int page,
-                                                      @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public ResponseEntity<Page<Student>> getStudents(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size, // Reducido de 10 a 20 para mejor UX
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
+        
+        // Validar parámetros para evitar valores extremos
+        page = Math.max(0, Math.min(page, 100)); // Máximo 100 páginas
+        size = Math.max(5, Math.min(size, 100)); // Entre 5 y 100 elementos
+        
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        
         return ResponseEntity.ok(studentService.getAllStudents(pageable));
     }
 

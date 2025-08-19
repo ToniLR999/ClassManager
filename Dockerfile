@@ -22,7 +22,7 @@ RUN ./mvnw clean package -DskipTests
 # Exponer puerto
 EXPOSE 8080
 
-# Ejecutar con configuración de memoria optimizada
+# Ejecutar con configuración de memoria MÍNIMA para Railway
 CMD ["java", \
      "-Xmx256m", \
      "-Xms128m", \
@@ -30,5 +30,10 @@ CMD ["java", \
      "-XX:+UseStringDeduplication", \
      "-XX:+UnlockExperimentalVMOptions", \
      "-XX:+UseCGroupMemoryLimitForHeap", \
+     "-XX:MaxMetaspaceSize=128m", \
+     "-XX:+DisableExplicitGC", \
+     "-XX:+OptimizeStringConcat", \
+     "-XX:+UseCompressedOops", \
+     "-XX:+UseCompressedClassPointers", \
      "-jar", \
      "target/ClassManager-0.0.1-SNAPSHOT.jar"]

@@ -43,11 +43,8 @@ public class StudentService {
         return toResponse(saved);
     }
 
-    public List<StudentResponse> getAll() {
-        return studentRepository.findAll()
-                .stream().map(this::toResponse)
-                .collect(Collectors.toList());
-    }
+    // ELIMINADO: método getAll() - PELIGROSO para memoria
+    // En su lugar, usar siempre getAllStudents(Pageable pageable)
     
     public Page<Student> getAllStudents(Pageable pageable) {
         return studentRepository.findAll(pageable);

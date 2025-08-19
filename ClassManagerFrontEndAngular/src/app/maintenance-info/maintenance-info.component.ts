@@ -15,15 +15,14 @@ export class MaintenanceInfoComponent implements OnInit, OnDestroy {
   maintenanceInfo: MaintenanceInfo | null = null;
   isLoading = true; 
   error = false;
-  debugInfo: any = null;
   private interval: any;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.loadMaintenanceInfo();
-    // Actualizar cada 5 minutos
-    this.interval = setInterval(() => this.loadMaintenanceInfo(), 300000);
+    // Actualizar cada 3 minutos (más eficiente que 5 minutos)
+    this.interval = setInterval(() => this.loadMaintenanceInfo(), 180000);
   }
 
   ngOnDestroy() {
@@ -36,27 +35,20 @@ export class MaintenanceInfoComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.error = false;
 
-    console.log('MaintenanceInfo: Cargando información del sistema...');
-
-    this.http.get(`${environment.apiUrl}/api/system/status`)
+    this.http.get(`${environment.apiUrl}/api/app-status/status`)
       .subscribe({
         next: (response: any) => {
-          console.log('MaintenanceInfo: Respuesta del servidor:', response);
-          this.debugInfo = response;
-          
           this.maintenanceInfo = {
-            status: response.active ? 'UP' : 'DOWN',
-            schedule: 'L-V 10:00-19:00 (Europe/Madrid)',
-            nextStart: 'N/A',
-            scheduleStatus: response.active ? 'ACTIVO' : 'INACTIVO',
+            status: response.status || 'UNKNOWN',
+            schedule: response.schedule || 'N/A',
+            nextStart: response.nextStart || 'N/A',
+            scheduleStatus: response.scheduleStatus || 'UNKNOWN',
             message: this.generateMessage(response)
           };
-          
-          console.log('MaintenanceInfo: Estado procesado:', this.maintenanceInfo);
           this.isLoading = false;
         },
         error: (err) => {
-          console.error('MaintenanceInfo: Error loading maintenance info:', err);
+          console.error('Error loading maintenance info:', err);
           this.error = true;
           this.isLoading = false;
         }
@@ -64,14 +56,8 @@ export class MaintenanceInfoComponent implements OnInit, OnDestroy {
   }
 
   private generateMessage(response: any): string {
-    console.log('MaintenanceInfo: Generando mensaje para:', response);
-    
-    if (response.active) {
+    if (response.status === 'UP' && response.scheduleStatus === 'ACTIVO') {
       return 'La aplicación está funcionando normalmente.';
-    }
-
-    if (response.isProduction === false) {
-      return 'La aplicación está en modo desarrollo y debería estar activa.';
     }
 
     if (response.scheduleStatus === 'INACTIVO') {
@@ -87,27 +73,6 @@ export class MaintenanceInfoComponent implements OnInit, OnDestroy {
     }
 
     return 'La aplicación está temporalmente no disponible.';
-  }
-
-  getStatusClass(): string {
-    if (!this.maintenanceInfo) return '';
-    
-    if (this.maintenanceInfo.status === 'UP' && this.maintenanceInfo.scheduleStatus === 'ACTIVO') {
-      return 'status-active';
-    }
-    
-    return 'status-maintenance';
-  }
-
-  getCurrentTime(): string {
-    return new Date().toLocaleString('es-ES', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
   }
 
   refreshInfo() {
