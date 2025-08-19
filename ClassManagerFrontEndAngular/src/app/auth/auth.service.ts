@@ -57,21 +57,42 @@ export class AuthService {
   }
 
   getCurrentUser() {
-    return this.http.get<any>(`${this.userApiUrl}/me`);
-
-    /*onst user = localStorage.getItem('user');
+    // Usar datos del localStorage en lugar de hacer llamada HTTP
+    const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
-  */}
+  }
+
+  // Método para obtener datos del backend (solo cuando sea necesario)
+  fetchCurrentUserFromBackend(): Observable<any> {
+    if (!this.isAuthenticated()) {
+      return new Observable(subscriber => {
+        subscriber.error('No authenticated');
+        subscriber.complete();
+      });
+    }
+    return this.http.get<any>(`${this.userApiUrl}/me`);
+  }
 
   // Esto se llama desde el perfil para refrescar los datos
   refreshCurrentUser() {
-    this.getCurrentUser().subscribe(user => {
-      console.log('Usuario actualizado desde backend:', user);
-      this.currentUserSubject.next(user); // actualiza los componentes suscritos
-    });
-    
-    /*const user = this.currentUser;
-    console.log('Usuario actual:', user);
-    */}
+    // Solo actualizar si hay un token válido
+    if (this.isAuthenticated()) {
+      this.fetchCurrentUserFromBackend().subscribe({
+        next: (user) => {
+          console.log('Usuario actualizado desde backend:', user);
+          this.currentUserSubject.next(user);
+        },
+        error: (error) => {
+          console.warn('No se pudo obtener usuario del backend, usando localStorage:', error);
+          const user = this.getCurrentUser();
+          this.currentUserSubject.next(user);
+        }
+      });
+    } else {
+      // Si no hay token, usar datos del localStorage
+      const user = this.getCurrentUser();
+      this.currentUserSubject.next(user);
+    }
+  }
 
 }
