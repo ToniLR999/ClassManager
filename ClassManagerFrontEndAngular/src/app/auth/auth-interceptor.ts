@@ -27,17 +27,11 @@ export class AuthInterceptor implements HttpInterceptor {
           if (error.status === 401 || error.status === 403) {
             // Token expirado o inválido
             if (req.url.includes('/users/me') || req.url.includes('/api/')) {
-              // Limpiar token y redirigir
               this.authService.logout();
-              
-              // No mostrar error en consola para endpoints protegidos
-              if (req.url.includes('/users/me')) {
-                console.warn('Token expirado o inválido, redirigiendo a login');
-                return new Observable(); // Retornar observable vacío
-              }
+              // Propagar el error manteniendo el tipo correcto
+              return throwError(() => error);
             }
           }
-          
           return throwError(() => error);
         })
       );
