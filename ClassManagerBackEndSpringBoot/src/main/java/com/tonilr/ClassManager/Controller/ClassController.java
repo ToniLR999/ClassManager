@@ -42,7 +42,7 @@ public class ClassController {
     }
     
     @GetMapping("/getClasses/paginated")
-    public ResponseEntity<Page<Class>> getClasses(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<ClassResponse>> getClasses(@RequestParam(defaultValue = "0") int page,
                                                         @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(classService.getAllClasses(pageable));

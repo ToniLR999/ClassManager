@@ -34,8 +34,10 @@ public class ClassService {
 		this.userRepository = userRepository;
 	}
 
-    public Page<Class> getAllClasses(Pageable pageable) {
-        return classRepository.findAll(pageable);
+    public Page<ClassResponse> getAllClasses(Pageable pageable) {
+        return classRepository.findAll(pageable)
+                .map(c -> new ClassResponse(c.getId(), c.getName(), c.getDescription(), 
+                                          c.getSubjects(), c.getSchedule(), c.getProfessor().getUsername()));
     }
     
 	@Transactional
