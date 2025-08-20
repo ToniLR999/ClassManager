@@ -20,7 +20,7 @@ public class Class {
     private String description;
     private String schedule;
     
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "class_subjects", joinColumns = @JoinColumn(name = "class_id"))
     @Column(name = "subject")
     private List<String> subjects;

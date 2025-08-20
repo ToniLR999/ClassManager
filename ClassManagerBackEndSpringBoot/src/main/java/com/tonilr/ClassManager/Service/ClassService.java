@@ -34,10 +34,16 @@ public class ClassService {
 		this.userRepository = userRepository;
 	}
 
+    @Transactional
     public Page<ClassResponse> getAllClasses(Pageable pageable) {
         return classRepository.findAll(pageable)
-                .map(c -> new ClassResponse(c.getId(), c.getName(), c.getDescription(), 
-                                          c.getSubjects(), c.getSchedule(), c.getProfessor().getUsername()));
+                .map(c -> {
+                    java.util.List<String> subjects = (c.getSubjects() == null)
+                            ? java.util.Collections.emptyList()
+                            : java.util.List.copyOf(c.getSubjects());
+                    String professorUsername = (c.getProfessor() == null) ? null : c.getProfessor().getUsername();
+                    return new ClassResponse(c.getId(), c.getName(), c.getDescription(), subjects, c.getSchedule(), professorUsername);
+                });
     }
     
 	@Transactional
@@ -63,7 +69,12 @@ public class ClassService {
         return userRepository.findByUsername(username)
                 .map(professor -> classRepository.findByProfessor(professor)
                         .stream()
-                        .map(c -> new ClassResponse(c.getId(), c.getName(), c.getDescription(), c.getSubjects(), c.getSchedule(), professor.getUsername()))
+                        .map(c -> {
+                            java.util.List<String> subjects = (c.getSubjects() == null)
+                                    ? java.util.Collections.emptyList()
+                                    : java.util.List.copyOf(c.getSubjects());
+                            return new ClassResponse(c.getId(), c.getName(), c.getDescription(), subjects, c.getSchedule(), professor.getUsername());
+                        })
                         .collect(Collectors.toList()))
                 .orElseGet(List::of);
     }
