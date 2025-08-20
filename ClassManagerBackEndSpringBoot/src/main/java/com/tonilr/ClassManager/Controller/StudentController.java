@@ -55,9 +55,20 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAllStudents(pageable));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")
     public ResponseEntity<StudentResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(studentService.getById(id));
+    }
+
+    // Compatibilidad: devolver una lista limitada (primera página) para /students/all
+    @GetMapping("/all")
+    public ResponseEntity<List<StudentResponse>> getAllCompat() {
+        Pageable pageable = PageRequest.of(0, 50, Sort.by(Sort.Direction.ASC, "id"));
+        Page<Student> page = studentService.getAllStudents(pageable);
+        List<StudentResponse> content = page.getContent().stream()
+                .map(s -> new StudentResponse(s.getId(), s.getFirstName(), s.getLastName(), s.getEmail()))
+                .toList();
+        return ResponseEntity.ok(content);
     }
 
     @PutMapping("/{id}")

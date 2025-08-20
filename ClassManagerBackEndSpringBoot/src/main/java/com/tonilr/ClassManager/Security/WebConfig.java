@@ -16,7 +16,7 @@ public class WebConfig {
                 registry.addMapping("/**")
                     .allowedOrigins(
                         "http://localhost:4200",
-                        "https://myclassmanager.netlify.app"
+                        "https://classmanager-tonilr.netlify.app"
                     )
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowedHeaders("*")
