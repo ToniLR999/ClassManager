@@ -36,6 +36,13 @@ public class JwtAuthFilter extends OncePerRequestFilter{
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
+        String method = request.getMethod();
+        
+        // Permitir preflight CORS requests
+        if ("OPTIONS".equals(method)) {
+            return true;
+        }
+        
         return path.startsWith("/auth/") || 
                path.equals("/api/system/status") || 
                path.equals("/actuator/health");
