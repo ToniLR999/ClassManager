@@ -8,7 +8,7 @@ on:
       test_mode:
         description: 'Modo de prueba (no modifica Railway)'
         required: false
-        default: 'true'  # Cambiado a 'true' para pruebas por defecto
+        default: false
         type: boolean
 
 jobs:
@@ -69,7 +69,7 @@ jobs:
           echo "🕐 Hora actual: $(date '+%Y-%m-%d %H:%M %Z')"
           echo "📅 Día de la semana: $current_day (1=Lunes, 7=Domingo)"
           echo "⏰ Minutos actuales: $current_minutes"
-          echo "�� Horario de negocio: $start_minutes - $end_minutes minutos"
+          echo "📝 Horario de negocio: $start_minutes - $end_minutes minutos"
 
           # Determinar si debe estar activo
           if [ "$current_day" -ge 1 ] && [ "$current_day" -le 5 ] && \
@@ -81,27 +81,25 @@ jobs:
             echo "🚫 Fuera de horario. Poniendo servicio en pausa."
           fi
 
+          # DEBUG: Mostrar información de secretos (sin revelar valores completos)
+          echo "🔍 Debug: Verificando configuración..."
+          echo "🔍 Debug: RAILWAY_TOKEN configurado: $([ -n "${RAILWAY_TOKEN:-}" ] && echo "SÍ" || echo "NO")"
+          echo "🔍 Debug: RAILWAY_SERVICE_ID configurado: $([ -n "${RAILWAY_SERVICE_ID:-}" ] && echo "SÍ" || echo "NO")"
+          echo "🔍 Debug: RAILWAY_PROJECT_ID configurado: $([ -n "${RAILWAY_PROJECT_ID:-}" ] && echo "SÍ" || echo "NO")"
+          
           # Verificar PROJECT_ID
           if [ -z "${RAILWAY_PROJECT_ID:-}" ]; then
             echo "⚠️ Falta RAILWAY_PROJECT_ID. Intenta sin projectId (puede fallar)."
           fi
 
-          # Preparar JSON para GraphQL usando variables
-          read -r -d '' json <<'EOF'
-          {
-            "query": "mutation ServiceUpdate($serviceId: String!, $projectId: String, $pause: Boolean!) { serviceUpdate(id: $serviceId, projectId: $projectId, pause: $pause) { id } }",
-            "variables": {
-              "serviceId": "__SERVICE_ID__",
-              "projectId": "__PROJECT_ID__",
-              "pause": __PAUSE__
-            }
-          }
-          EOF
+          echo "🔍 Debug: Construyendo JSON para GraphQL..."
+          
+          # Construir JSON con mutación estándar de Railway
+          json="{\"query\":\"mutation { serviceUpdate(id: \\\"$RAILWAY_SERVICE_ID\\\", pause: $pause) { id } }\"}"
 
-          # Sustituir variables en el JSON
-          json=${json/__SERVICE_ID__/$RAILWAY_SERVICE_ID}
-          json=${json/__PROJECT_ID__/${RAILWAY_PROJECT_ID:-null}}
-          if [ "$pause" = true ]; then json=${json/__PAUSE__/true}; else json=${json/__PAUSE__/false}; fi
+          echo "🔍 Debug: JSON construido directamente"
+          echo "🔍 Debug: pause = $pause"
+          echo "🔍 Debug: JSON length = ${#json}"
 
           # Verificar si es modo de prueba
           if [ "${{ github.event.inputs.test_mode }}" = "true" ]; then
@@ -112,7 +110,7 @@ jobs:
             exit 0
           fi
 
-          echo "�� Enviando request a Railway..."
+          echo "📡 Enviando request a Railway..."
           
           # Hacer llamada a Railway API
           resp=$(curl -sS -w "HTTP_CODE:%{http_code}" -X POST https://backboard.railway.app/graphql/v2 \
