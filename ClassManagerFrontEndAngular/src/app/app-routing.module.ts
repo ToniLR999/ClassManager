@@ -12,7 +12,7 @@ import { AttendanceComponent } from './dashboard/attendance/attendance.component
 import { AttendanceHistoryComponent } from './dashboard/attendance-history/attendance-history.component';
 import { ProfileComponent } from './dashboard/profile/profile.component';
 import { MaintenanceInfoComponent } from './maintenance-info/maintenance-info.component';
-import { MaintenanceGuard } from './shared/maintenance.guard';
+import { MaintenanceGuard } from './maintenance-info/maintenance.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [MaintenanceGuard] },

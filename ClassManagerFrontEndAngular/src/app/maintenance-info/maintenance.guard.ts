@@ -1,31 +1,23 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class MaintenanceGuard implements CanActivate {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private router: Router) {}
 
   canActivate(): Observable<boolean | UrlTree> {
-    
-    return this.http.get<{ active: boolean; maintenance: boolean; isProduction: boolean }>(`${environment.apiUrl}/api/system/status`).pipe(
-      tap(response => {
-      }),
-      map((res) => {
-        
-        if (res && res.active) {
-          return true;
-        }
-        
-        return this.router.parseUrl('/maintenance');
-      }),
-      catchError((error) => {
-        return of(this.router.parseUrl('/maintenance'));
-      })
-    );
+    const now = new Date();
+    const day = now.getDay(); // 0=Domingo, 1=Lunes, ... 6=Sábado
+    const hour = now.getHours();
+
+    const isWeekday = day >= 1 && day <= 5;
+    const withinHours = hour >= 10 && hour < 19; // 10:00-19:00
+
+    if (isWeekday && withinHours) {
+      return of(true);
+    }
+    return of(this.router.parseUrl('/maintenance'));
   }
 }
 

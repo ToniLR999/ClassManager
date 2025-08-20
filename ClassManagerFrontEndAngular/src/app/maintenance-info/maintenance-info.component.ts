@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { MaintenanceInfo } from './maintenance-info.model';
 
 @Component({
@@ -17,11 +15,9 @@ export class MaintenanceInfoComponent implements OnInit, OnDestroy {
   error = false;
   private interval: any;
 
-  constructor(private http: HttpClient) {}
-
   ngOnInit() {
     this.loadMaintenanceInfo();
-    // Actualizar cada 3 minutos (más eficiente que 5 minutos)
+    // Actualizar cada 3 minutos
     this.interval = setInterval(() => this.loadMaintenanceInfo(), 180000);
   }
 
@@ -35,60 +31,46 @@ export class MaintenanceInfoComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.error = false;
 
-    this.http.get(`${environment.apiUrl}/api/system/status`)
-      .subscribe({
-        next: (response: any) => {
-          this.maintenanceInfo = {
-            status: response.active ? 'UP' : 'DOWN',
-            schedule: `Lun-Vie ${response.fromHour}:00-${response.toHour}:00`,
-            nextStart: this.getNextStartTime(response),
-            scheduleStatus: response.active ? 'ACTIVO' : 'INACTIVO',
-            message: this.generateMessage(response)
-          };
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error('Error loading maintenance info:', err);
-          this.error = true;
-          this.isLoading = false;
-        }
-      });
+    try {
+      const info = this.computeLocalMaintenanceInfo();
+      this.maintenanceInfo = info;
+      this.isLoading = false;
+    } catch (e) {
+      console.error('Error computing maintenance info:', e);
+      this.error = true;
+      this.isLoading = false;
+    }
   }
 
-  private getNextStartTime(response: any): string {
-    if (response.active) {
-      return 'Disponible ahora';
-    }
-    
-    // Si es fin de semana, próximo lunes
-    const currentDay = response.currentDay;
-    if (currentDay === 'SATURDAY' || currentDay === 'SUNDAY') {
-      return 'Lunes 10:00';
-    }
-    
-    // Si es fuera de horario, próximo día laboral
-    return 'Próximo día laboral 10:00';
+  private computeLocalMaintenanceInfo(): MaintenanceInfo {
+    const now = new Date();
+    const day = now.getDay(); // 0=Domingo, 1=Lunes, ... 6=Sábado
+    const hour = now.getHours();
+
+    const isWeekday = day >= 1 && day <= 5;
+    const withinHours = hour >= 10 && hour < 19; // 10:00-19:00
+    const active = isWeekday && withinHours;
+
+    return {
+      status: active ? 'UP' : 'DOWN',
+      schedule: 'Lun-Vie 10:00-19:00',
+      nextStart: this.getNextStartTime(active, day, hour),
+      scheduleStatus: active ? 'ACTIVO' : 'INACTIVO',
+      message: this.generateMessage(active, day, hour)
+    };
   }
 
-  private generateMessage(response: any): string {
-    if (response.active) {
-      return 'La aplicación está funcionando normalmente.';
-    }
+  private getNextStartTime(active: boolean, day: number, hour: number): string {
+    if (active) return 'Disponible ahora';
+    if (day === 6 || day === 0) return 'Lunes 10:00';
+    return hour < 10 ? 'Hoy 10:00' : 'Mañana 10:00';
+  }
 
-    if (response.currentDay === 'SATURDAY' || response.currentDay === 'SUNDAY') {
-      return 'La aplicación está cerrada durante el fin de semana.';
-    }
-
-    if (!response.active && response.currentTime) {
-      const currentHour = parseInt(response.currentTime.split(':')[0]);
-      if (currentHour < response.fromHour) {
-        return `La aplicación estará disponible hoy a las ${response.fromHour}:00.`;
-      } else if (currentHour >= response.toHour) {
-        return 'La aplicación estará disponible mañana a las 10:00.';
-      }
-    }
-
-    return 'La aplicación está temporalmente no disponible.';
+  private generateMessage(active: boolean, day: number, hour: number): string {
+    if (active) return 'La aplicación está funcionando normalmente.';
+    if (day === 6 || day === 0) return 'La aplicación está cerrada durante el fin de semana.';
+    if (hour < 10) return 'La aplicación estará disponible hoy a las 10:00.';
+    return 'La aplicación estará disponible mañana a las 10:00.';
   }
 
   refreshInfo() {

@@ -44,7 +44,6 @@ public class JwtAuthFilter extends OncePerRequestFilter{
         }
         
         return path.startsWith("/auth/") || 
-               path.equals("/api/system/status") || 
                path.equals("/actuator/health");
     }
 	
