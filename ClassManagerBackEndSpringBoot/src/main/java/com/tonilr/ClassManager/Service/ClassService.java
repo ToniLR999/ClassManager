@@ -55,6 +55,7 @@ public class ClassService {
         return new ClassResponse(saved.getId(), saved.getName(), saved.getDescription(),saved.getSubjects(), saved.getSchedule(), professor.getUsername());
     }
 
+    @Transactional
     @Cacheable(value = "classesByProfessor", key = "#username")
     public List<ClassResponse> getClassesByProfessor(String username) {
         return userRepository.findByUsername(username)
