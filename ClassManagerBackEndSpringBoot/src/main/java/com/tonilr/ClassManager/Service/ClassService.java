@@ -57,13 +57,12 @@ public class ClassService {
 
     @Cacheable(value = "classesByProfessor", key = "#username")
     public List<ClassResponse> getClassesByProfessor(String username) {
-        User professor = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Professor not found"));
-
-        return classRepository.findByProfessor(professor)
-                .stream()
-                .map(c -> new ClassResponse(c.getId(), c.getName(), c.getDescription(), c.getSubjects(), c.getSchedule(), professor.getUsername()))
-                .collect(Collectors.toList());
+        return userRepository.findByUsername(username)
+                .map(professor -> classRepository.findByProfessor(professor)
+                        .stream()
+                        .map(c -> new ClassResponse(c.getId(), c.getName(), c.getDescription(), c.getSubjects(), c.getSchedule(), professor.getUsername()))
+                        .collect(Collectors.toList()))
+                .orElseGet(List::of);
     }
     
     public ClassResponse getClassById(Long id, String username) {
