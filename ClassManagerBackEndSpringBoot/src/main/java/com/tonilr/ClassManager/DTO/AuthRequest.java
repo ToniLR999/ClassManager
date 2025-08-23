@@ -1,8 +1,5 @@
 package com.tonilr.ClassManager.DTO;
 
-import lombok.Data;
-
-@Data
 public class AuthRequest {
     private String username;
     private String password;
@@ -27,8 +24,4 @@ public class AuthRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-    
-    
 }

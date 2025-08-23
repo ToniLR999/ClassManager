@@ -1,7 +1,6 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,12 +24,13 @@ import { ProfileComponent } from './dashboard/profile/profile.component';
 import { AttendanceHistoryComponent } from './dashboard/attendance-history/attendance-history.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { MatSelectModule } from '@angular/material/select';
-import { MatChipsModule,MatChipGrid } from '@angular/material/chips';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
-
-
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -58,16 +58,18 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSnackBarModule,
     MatSelectModule,
     MatChipsModule,
-    MatChipGrid,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatListModule,
+    MatIconModule,
+    MatCardModule,
+    MatProgressSpinnerModule
   ],
-  providers: [AuthModule,   {
+  providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
   }],
-  bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

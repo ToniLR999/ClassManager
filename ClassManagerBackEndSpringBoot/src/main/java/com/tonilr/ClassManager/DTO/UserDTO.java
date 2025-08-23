@@ -8,13 +8,11 @@ public class UserDTO {
     private String email;
     private Role role;
     
-    
     public UserDTO(Long id, String username, String email, Role role) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.role = role;
-
     }
 
 	public Long getId() {

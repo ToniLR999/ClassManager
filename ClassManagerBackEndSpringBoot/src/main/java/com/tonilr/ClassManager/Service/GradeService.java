@@ -1,6 +1,5 @@
 package com.tonilr.ClassManager.Service;
 
-
 import com.tonilr.ClassManager.DTO.GradeRequest;
 import com.tonilr.ClassManager.DTO.GradeResponse;
 import com.tonilr.ClassManager.Model.Class;
@@ -9,7 +8,6 @@ import com.tonilr.ClassManager.Model.Student;
 import com.tonilr.ClassManager.Repository.ClassRepository;
 import com.tonilr.ClassManager.Repository.GradeRepository;
 import com.tonilr.ClassManager.Repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,16 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class GradeService {
 
-	@Autowired
     private final GradeRepository gradeRepository;
 	
-	@Autowired
 	private final StudentRepository studentRepository;
     
-	@Autowired
 	private final ClassRepository classRepository;
-	
-	
 
     public GradeService(GradeRepository gradeRepository, StudentRepository studentRepository,
 			ClassRepository classRepository) {

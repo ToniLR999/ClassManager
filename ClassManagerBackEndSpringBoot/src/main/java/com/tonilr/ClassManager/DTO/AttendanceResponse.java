@@ -10,7 +10,6 @@ public class AttendanceResponse {
     private String studentLastName;
     private Long classId;
     private String className;
-
     
 	public AttendanceResponse(Long id, LocalDate date, Long studentId, String studentFirstName, String studentLastName,
 			Long classId, String className) {
@@ -66,8 +65,4 @@ public class AttendanceResponse {
 	public void setClassName(String className) {
 		this.className = className;
 	}
-	
-	
-
-    // constructor, getters, setters...
 }

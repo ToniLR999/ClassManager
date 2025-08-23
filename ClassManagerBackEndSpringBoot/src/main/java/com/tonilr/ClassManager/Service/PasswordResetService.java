@@ -4,7 +4,6 @@ import com.tonilr.ClassManager.Model.PasswordResetToken;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Repository.PasswordResetTokenRepository;
 import com.tonilr.ClassManager.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,13 +12,10 @@ import java.util.UUID;
 @Service
 public class PasswordResetService {
 
-	@Autowired
     private final UserRepository userRepository;
 
-	@Autowired
 	private final PasswordResetTokenRepository tokenRepository;
     
-	@Autowired
 	private final EmailService emailService;
 
 	public PasswordResetService(UserRepository userRepository, PasswordResetTokenRepository tokenRepository,
@@ -29,7 +25,6 @@ public class PasswordResetService {
 		this.tokenRepository = tokenRepository;
 		this.emailService = emailService;
 	}
-
 
 	public void initiatePasswordReset(String email) {
         User user = userRepository.findByEmail(email)
@@ -44,6 +39,4 @@ public class PasswordResetService {
         tokenRepository.save(resetToken);
         emailService.sendPasswordResetEmail(email, token);
     }
-
-    // método para validar y aplicar nuevo password se implementará luego
 }

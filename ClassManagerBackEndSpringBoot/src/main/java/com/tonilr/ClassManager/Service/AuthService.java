@@ -5,7 +5,6 @@ import com.tonilr.ClassManager.DTO.RegisterRequest;
 import com.tonilr.ClassManager.Model.Role;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Repository.UserRepository;
-import com.tonilr.ClassManager.Util.SanitizationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,8 +43,8 @@ public class AuthService {
 
 	public String register(RegisterRequest request) {
         var user = new User();
-        user.setUsername(SanitizationUtils.sanitize(request.getUsername()));
-        user.setEmail(SanitizationUtils.sanitize(request.getEmail()));
+        user.setUsername(request.getUsername() != null ? request.getUsername().trim() : null);
+        user.setEmail(request.getEmail() != null ? request.getEmail().trim() : null);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.PROFESSOR);
 

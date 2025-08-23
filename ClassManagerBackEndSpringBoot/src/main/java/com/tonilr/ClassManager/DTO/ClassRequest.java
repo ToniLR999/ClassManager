@@ -1,11 +1,7 @@
 package com.tonilr.ClassManager.DTO;
 
-import lombok.Data;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
 public class ClassRequest {
     private String name;
     private String description;
@@ -36,8 +32,4 @@ public class ClassRequest {
 	public void setSubjects(List<String> subjects) {
 		this.subjects = subjects;
 	}
-	
-	
-    
-    
 }

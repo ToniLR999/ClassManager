@@ -1,13 +1,11 @@
 package com.tonilr.ClassManager.Service;
 
-
 import com.tonilr.ClassManager.Model.Attendance;
 import com.tonilr.ClassManager.Model.Class;
 import com.tonilr.ClassManager.Model.Student;
 import com.tonilr.ClassManager.Repository.AttendanceRepository;
 import com.tonilr.ClassManager.Repository.ClassRepository;
 import com.tonilr.ClassManager.Repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,16 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class AttendanceService {
 
-	@Autowired
     private final AttendanceRepository attendanceRepository;
     
-	@Autowired
 	private final ClassRepository classRepository;
-	@Autowired
+
 	private final StudentRepository studentRepository;
 	
-	
-
     public AttendanceService(AttendanceRepository attendanceRepository, ClassRepository classRepository,
 			StudentRepository studentRepository) {
 		super();

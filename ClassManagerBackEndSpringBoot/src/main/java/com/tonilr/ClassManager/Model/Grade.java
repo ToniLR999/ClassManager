@@ -28,12 +28,9 @@ public class Grade {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_id")
     private Class clazz;
-
-   
+	
 	public Grade() {
 	}
-
-
 
 	public Grade(Long id, Double value, String subject, String description, LocalDate date, Student student,
 			Class clazz) {
@@ -46,8 +43,6 @@ public class Grade {
 		this.student = student;
 		this.clazz = clazz;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -104,7 +99,4 @@ public class Grade {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-    
-	
-    
 }

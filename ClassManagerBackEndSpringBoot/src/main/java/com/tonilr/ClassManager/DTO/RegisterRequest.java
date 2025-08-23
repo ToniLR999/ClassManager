@@ -3,9 +3,7 @@ package com.tonilr.ClassManager.DTO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 
-@Data
 public class RegisterRequest {
 
     @NotBlank(message = "El nombre es obligatorio")
@@ -67,7 +65,4 @@ public class RegisterRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-    
-    
-	
 }

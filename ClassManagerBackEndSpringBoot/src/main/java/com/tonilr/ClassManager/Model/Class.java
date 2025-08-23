@@ -39,7 +39,6 @@ public class Class {
     @JsonIgnore
     private Set<Student> students = new HashSet<>();
 
-
 	public Class() {
 	}
 
@@ -110,8 +109,4 @@ public class Class {
 	public void setSubjects(List<String> subjects) {
 		this.subjects = subjects;
 	}
-	
-	
-    
-    
 }

@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router'; 
@@ -25,13 +25,7 @@ import { RegisterComponent } from './register-component/register-component.compo
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatSelectModule,
-
-
-  ],
-  providers: [AuthModule],
-
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
-  
+    MatSelectModule
+  ]
 })
 export class AuthModule { }

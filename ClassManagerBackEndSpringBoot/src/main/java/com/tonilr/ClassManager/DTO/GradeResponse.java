@@ -1,17 +1,12 @@
 package com.tonilr.ClassManager.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-
 public class GradeResponse {
     private Long id;
     private String subject;
     private Double value;
     private String description;
-    private String studentName; // --> nombre del alumno
-    private String className;   // --> nombre de la clase
-    
+    private String studentName; 
+    private String className;
     
 	public GradeResponse(Long id, String subject, Double value, String description, String studentName,
 			String className) {
@@ -59,7 +54,4 @@ public class GradeResponse {
 	public void setClassName(String className) {
 		this.className = className;
 	}
-    
-    
-    
 }

@@ -34,9 +34,6 @@ public class StudentController {
     public ResponseEntity<StudentResponse> create(@RequestBody StudentRequest request) {
         return ResponseEntity.ok(studentService.create(request));
     }
-
-    // ELIMINADO: @GetMapping("/all") - PELIGROSO para memoria
-    // En su lugar, usar siempre paginación
     
     @GetMapping
     public ResponseEntity<Page<Student>> getStudents(
@@ -60,7 +57,6 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getById(id));
     }
 
-    // Compatibilidad: devolver una lista limitada (primera página) para /students/all
     @GetMapping("/all")
     public ResponseEntity<List<StudentResponse>> getAllCompat() {
         Pageable pageable = PageRequest.of(0, 50, Sort.by(Sort.Direction.ASC, "id"));

@@ -1,8 +1,5 @@
 package com.tonilr.ClassManager.DTO;
 
-import lombok.Data;
-
-@Data
 public class GradeRequest {
     private Long studentId;
     private Long classId;
@@ -58,6 +55,4 @@ public class GradeRequest {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-    
-    
 }

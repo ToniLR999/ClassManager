@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -14,17 +14,7 @@ export class ClassAssignmentService {
 
   constructor(private http: HttpClient) {}
 
-  getAllClasses(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.ClassUrl}/getClasses`);
-  }
 
-  getClassesPaginated(page: number, size: number): Observable<any[]> {
-
-        const params = new HttpParams()
-        .set('page', page)
-        .set('size', size);
-    return this.http.get<any[]>(`${this.ClassUrl}/getClasses/paginated`, {params});
-  }
 
   getAllStudents(): Observable<any[]> {
     return this.http.get<any[]>(`${this.StudentsUrl}/all`);

@@ -11,15 +11,11 @@ public class PasswordResetController {
 
 	@Autowired
     private final PasswordResetService passwordResetService;
-	
-	
 
     public PasswordResetController(PasswordResetService passwordResetService) {
 		super();
 		this.passwordResetService = passwordResetService;
 	}
-
-
 
 	@PostMapping("/forgot")
     public ResponseEntity<String> forgotPassword(@RequestParam String email) {

@@ -22,8 +22,6 @@ public class Attendance {
     private Class clazz;
 
     private LocalDate date;
-    
-    
 
 	public Attendance() {
 	}
@@ -38,7 +36,6 @@ public class Attendance {
 
 	public Long getId() {
 		return id;
-		
 	}
 
 	public void setId(Long id) {
@@ -68,8 +65,5 @@ public class Attendance {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-    
-    
-    
 }
 

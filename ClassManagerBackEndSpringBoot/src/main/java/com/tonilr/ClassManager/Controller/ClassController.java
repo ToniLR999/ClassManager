@@ -3,11 +3,9 @@ package com.tonilr.ClassManager.Controller;
 import com.tonilr.ClassManager.DTO.ClassRequest;
 import com.tonilr.ClassManager.DTO.ClassResponse;
 import com.tonilr.ClassManager.Service.ClassService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import com.tonilr.ClassManager.Model.Class;
 import com.tonilr.ClassManager.Model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +16,6 @@ import java.util.List;
 @RequestMapping("/classes")
 public class ClassController {
 
-	@Autowired
     private final ClassService classService;
 	
     public ClassController(ClassService classService) {
@@ -28,16 +25,12 @@ public class ClassController {
 	@PostMapping
     public ResponseEntity<ClassResponse> createClass(@RequestBody ClassRequest request) {
         String username = getUsernameFromContext();
-        System.out.println("Username del profe: "+username);
-        System.out.println("Esta vacia la lista de materias?: "+request.getSubjects().isEmpty());
-
         return ResponseEntity.ok(classService.createClass(request, username));
     }
 
     @GetMapping("/getClasses")
     public ResponseEntity<List<ClassResponse>> getMyClasses() {
         String username = getUsernameFromContext();
-        System.out.println("Professor username: "+username);
         return ResponseEntity.ok(classService.getClassesByProfessor(username));
     }
     

@@ -35,8 +35,8 @@ export class AttendanceHistoryComponent implements OnInit {
 
   fetchByStudent() {
     if (!this.selectedStudentId) return;
-    this.attendanceService.getAttendanceByStudent(this.selectedStudentId).subscribe(res => {
-      this.attendance = res as any[];
-    });
+    // Nota: getAttendanceByStudent fue eliminado del servicio
+    // Se puede implementar una nueva funcionalidad o usar getAttendanceByClass
+    console.warn('Funcionalidad de búsqueda por estudiante no implementada');
   }
 }

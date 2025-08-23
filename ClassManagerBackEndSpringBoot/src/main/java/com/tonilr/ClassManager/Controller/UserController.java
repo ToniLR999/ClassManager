@@ -3,7 +3,6 @@ package com.tonilr.ClassManager.Controller;
 import com.tonilr.ClassManager.DTO.UserDTO;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +21,13 @@ public class UserController {
 
     private final UserService userService;
 
-	
-	@Autowired
     private final UserRepository userRepository;
-	
-	
+		
     public UserController(UserService userService, UserRepository userRepository) {
 		super();
 		this.userService = userService;
 		this.userRepository = userRepository;
 	}
-
 
 	@GetMapping
     public ResponseEntity<Page<User>> getUsers(@RequestParam(defaultValue = "0") int page,
@@ -40,7 +35,6 @@ public class UserController {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
-
 
     @GetMapping("/me")
     public ResponseEntity<UserDTO> getCurrentUser() {
@@ -52,7 +46,6 @@ public class UserController {
         } else {
             username = principal.toString();
         }
-        System.out.println("Current username from security context: " + username);
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { ClassAssignmentService } from 'src/app/dashboard/class-assignment/class-assignment.service';
+import { ClassService } from 'src/app/dashboard/classes/class.service';
 
 @Component({
   selector: 'app-class-assignment',
@@ -14,10 +15,13 @@ export class ClassAssignmentComponent implements OnInit {
   selectedStudents: number[] = [];
   assignedStudents: any[] = [];
 
-  constructor(private assignmentService: ClassAssignmentService) {}
+  constructor(
+    private assignmentService: ClassAssignmentService,
+    private classService: ClassService
+  ) {}
 
   ngOnInit(): void {
-    this.assignmentService.getAllClasses().subscribe(data => {
+    this.classService.getAllClasses().subscribe(data => {
       this.classes = data;
     });
 

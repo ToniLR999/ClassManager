@@ -4,7 +4,6 @@ import com.tonilr.ClassManager.DTO.AttendanceResponse;
 import com.tonilr.ClassManager.Model.Attendance;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Service.AttendanceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;   
@@ -14,10 +13,8 @@ import java.util.List;
 @RequestMapping("/attendance")
 public class AttendanceController {
 
-	@Autowired
     private final AttendanceService attendanceService;
 	
-
     public AttendanceController(AttendanceService attendanceService) {
 		super();
 		this.attendanceService = attendanceService;
@@ -26,7 +23,6 @@ public class AttendanceController {
     //Frontend envia la fecha donde se registra la attendance por si se quiere registrar de otro dia
 	@PostMapping("/mark")
     public ResponseEntity<Void> markAttendance(@RequestParam Long studentId, @RequestParam Long classId) {
-		System.out.println("studentId = " + studentId + ", classId = " + classId);
 
         String username = getUsername();
         attendanceService.markAttendance(studentId, classId, username);

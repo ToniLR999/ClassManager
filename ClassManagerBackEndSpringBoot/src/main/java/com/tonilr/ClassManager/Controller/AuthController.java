@@ -1,13 +1,11 @@
 package com.tonilr.ClassManager.Controller;
 
-
 import com.tonilr.ClassManager.DTO.AuthRequest;
 import com.tonilr.ClassManager.DTO.RegisterRequest;
 import com.tonilr.ClassManager.Service.AuthService;
 import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-	@Autowired
     private final AuthService authService;
 	
     public AuthController(AuthService authService) {

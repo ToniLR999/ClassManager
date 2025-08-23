@@ -45,7 +45,4 @@ public class StudentResponse {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-    
-    
-	
 }

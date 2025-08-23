@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 @Entity
 @Table(name = "students")
 @JsonIgnoreProperties({"classes","hibernateLazyInitializer","handler"})
@@ -77,7 +76,4 @@ public class Student {
 	public void setClasses(Set<Class> classes) {
 		this.classes = classes;
 	}
-
-
-    
 }

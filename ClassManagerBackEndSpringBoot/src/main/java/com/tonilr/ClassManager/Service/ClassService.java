@@ -7,7 +7,6 @@ import com.tonilr.ClassManager.Model.Class;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Repository.ClassRepository;
 import com.tonilr.ClassManager.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,14 +20,10 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class ClassService {
 
-	@Autowired
     private final ClassRepository classRepository;
     
-	@Autowired
 	private final UserRepository userRepository;
 	
-	
-
     public ClassService(ClassRepository classRepository, UserRepository userRepository) {
 		this.classRepository = classRepository;
 		this.userRepository = userRepository;

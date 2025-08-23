@@ -5,23 +5,17 @@ import com.tonilr.ClassManager.DTO.GradeResponse;
 import com.tonilr.ClassManager.Model.Grade;
 import com.tonilr.ClassManager.Model.User;
 import com.tonilr.ClassManager.Service.GradeService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/grades")
 public class GradeController {
 
-	@Autowired
     private final GradeService gradeService;
 
-	
-	
     public GradeController(GradeService gradeService) {
 		super();
 		this.gradeService = gradeService;

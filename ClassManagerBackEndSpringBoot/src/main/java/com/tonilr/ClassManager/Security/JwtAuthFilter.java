@@ -1,8 +1,7 @@
 package com.tonilr.ClassManager.Security;
 
 import com.tonilr.ClassManager.Model.User;
-import com.tonilr.ClassManager.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tonilr.ClassManager.Service.JwtService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -18,15 +17,10 @@ import java.io.IOException;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter{
 	
-	@Autowired
-	private final JwtUtil jwtUtil;
-	
-	@Autowired
-    private final UserRepository userRepository;
+	private final JwtService jwtService;
 
-    public JwtAuthFilter(JwtUtil jwtUtil, UserRepository userRepository) {
-        this.jwtUtil = jwtUtil;
-        this.userRepository = userRepository;
+    public JwtAuthFilter(JwtService jwtService) {
+        this.jwtService = jwtService;
     }
     
     @Override
@@ -57,11 +51,13 @@ public class JwtAuthFilter extends OncePerRequestFilter{
         }
 
         jwt = authHeader.substring(7);
-        username = jwtUtil.extractUsername(jwt);
+        username = jwtService.extractUsername(jwt);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            User user = userRepository.findByUsername(username).orElse(null);
-            if (user != null && jwtUtil.isTokenValid(jwt, user)) {
+            if (jwtService.isTokenValid(jwt)) {
+                User user = new User();
+                user.setUsername(username);
+                
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(user, null, null);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

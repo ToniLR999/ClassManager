@@ -7,11 +7,9 @@ import com.tonilr.ClassManager.Model.Student;
 import com.tonilr.ClassManager.Repository.ClassRepository;
 import com.tonilr.ClassManager.Repository.StudentRepository;
 import com.tonilr.ClassManager.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class StudentService {
 	
-	@Autowired
     private final StudentRepository studentRepository;
     
-	@Autowired
-	private final ClassRepository classRepository;
+    private final ClassRepository classRepository;
     
 	public StudentService(StudentRepository studentRepository, ClassRepository classRepository,
 			UserRepository userRepository) {
@@ -42,9 +38,6 @@ public class StudentService {
         Student saved = studentRepository.save(student);
         return toResponse(saved);
     }
-
-    // ELIMINADO: método getAll() - PELIGROSO para memoria
-    // En su lugar, usar siempre getAllStudents(Pageable pageable)
     
     public Page<Student> getAllStudents(Pageable pageable) {
         return studentRepository.findAll(pageable);

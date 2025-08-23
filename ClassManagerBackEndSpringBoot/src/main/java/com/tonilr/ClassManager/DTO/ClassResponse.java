@@ -10,8 +10,6 @@ public class ClassResponse {
     private String schedule;
     private String professorUsername;
     
-
-    
 	public ClassResponse(Long id, String name, String description, List<String> subjects, String schedule,
 			String professorUsername) {
 		super();
@@ -61,8 +59,4 @@ public class ClassResponse {
 	public void setSubjects(List<String> subjects) {
 		this.subjects = subjects;
 	}
-
-	
-
-
 }
