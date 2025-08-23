@@ -3,13 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MaintenanceInfo } from './maintenance-info.model';
 
 @Component({
-  selector: 'app-maintenance-info',
-  standalone: true,
-  imports: [CommonModule],
+  selector: 'app-info',
   templateUrl: './maintenance-info.component.html',
   styleUrls: ['./maintenance-info.component.css']
 })
-export class MaintenanceInfoComponent implements OnInit, OnDestroy {
+export class InfoComponent implements OnInit, OnDestroy {
   maintenanceInfo: MaintenanceInfo | null = null;
   isLoading = true; 
   error = false;

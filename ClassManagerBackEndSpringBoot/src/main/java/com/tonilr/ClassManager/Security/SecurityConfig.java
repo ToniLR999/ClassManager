@@ -32,7 +32,7 @@ public class SecurityConfig {
         return http
             .csrf(csrf -> csrf.disable())  // ✅ Sintaxis moderna
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/actuator/health").permitAll()
+                .requestMatchers("/auth/**", "/actuator/health", "/password/**").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -32,7 +32,7 @@ public class EmailService {
         message.setFrom(from);
         message.setTo(to);
         message.setSubject("Recuperación de contraseña");
-        message.setText("Haz clic en el siguiente enlace para restablecer tu contraseña:\n\nhttp://localhost:4200/reset-password?token=" + token);
+        message.setText("Haz clic en el siguiente enlace para restablecer tu contraseña:\n\nhttp://localhost:4200/change-password?token=" + token);
         mailSender.send(message);
     }
 }

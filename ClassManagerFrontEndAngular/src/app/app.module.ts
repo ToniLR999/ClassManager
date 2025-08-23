@@ -11,6 +11,9 @@ import { StudentsComponent } from './dashboard/students/students.component';
 import { GradesComponent } from './dashboard/grades/grades.component';
 import { ClassesComponent } from './dashboard/classes/classes.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PasswordResetComponent } from './auth/password-reset/password-reset.component';
+import { ChangePasswordComponent } from './auth/change-password/change-password.component';
+import { InfoComponent } from './maintenance-info/maintenance-info.component';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -42,7 +45,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ClassAssignmentComponent,
     AttendanceComponent,
     ProfileComponent,
-    AttendanceHistoryComponent
+    AttendanceHistoryComponent,
+    PasswordResetComponent,
+    ChangePasswordComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,
